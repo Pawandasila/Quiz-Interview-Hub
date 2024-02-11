@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:500&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Dancing+Script&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body,
+html {
+	height: 100%;
+	margin: 0;
+	scroll-behavior: smooth;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.first-div,
+.second-div {
+	height: 100vh;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.user-image_main {
+	height: 120px;
+	width: 105px;
+	display: flex;
+	margin: 0 auto;
+	border-radius: 50%;
+	overflow: hidden;
+	vertical-align: middle;
+}
+
+.user-image_main img {
+	width: 100%;
+	height: auto;
+	object-fit: cover;
+}
+
+.template {
+	border-radius: 12px;
+}
+
+.user-detail {
+	width: 270px;
+	margin: 19px auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+}
+
+.user-detail h4,
+.user-detail p {
+	margin-bottom: 10px;
+	color: white;
+	/* Adjust the margin as needed */
+}
+
+.custom-table {
+	background-color: #F4EEE0;
+}
+
+.template {
+	background-color: #F4EEE0;
+	padding: 10px;
+	height: 35vh;
+	display: grid;
+	place-items: center;
+
+}
+
+.custom-table {
+	width: 23rem;
+	border-collapse: collapse;
+	margin-top: 15px;
+	border-radius: 12px;
+	overflow: hidden;
+	padding: 12px;
+}
+
+.custom-table th,
+.custom-table td {
+	border: 1px solid #ddd;
+	padding: 8px;
+	text-align: left;
+}
+
+.custom-table th {
+	background-color: #f2f2f2;
+}
+
+.custom-table tbody tr:hover {
+	background-color: #e0f3ff;
+}
+
+.tab-content {
+	margin-top: 4px;
+}
+
+.card {
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#pieChart {
+	height: 300px !important;
+}
+
+.summary-box {
+	width: 100%;
+	padding: 15px;
+	margin: 10px;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	font-size: medium;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* Icon style */
+.summary-box i {
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+/* Title style */
+.summary-box .box-title {
+	margin-bottom: 8px;
+	font-weight: bold;
+}
+
+/* Value style */
+.summary-box .box-value {
+	font-weight: bold;
+}
+
+/* Centered summary boxes */
+.centered-summary-boxes {
+	display: flex;
+	justify-content: space-around;
+}
+
+/* Color for given tests box */
+.given-box {
+	background-color: #61c0bf;
+	color: #fff;
+}
+
+/* Color for passed tests box */
+.passed-box {
+	background-color: #4caf50;
+	color: #fff;
+}
+
+/* Color for enrolled but not given box */
+.enrolled-box {
+	background-color: #ffc107;
+	color: #fff;
+}
+
+/* Color for disqualified tests box */
+.disqualified-box {
+	background-color: #f44336;
+	color: #fff;
+}
+
+.interview-model {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 10px;
+	/* Add margin for separation */
+}
+
+@media (max-width: 576px) {
+	.interview-model {
+		height: auto;
+		/* Adjust height for smaller screens */
+	}
+}
+
+.form1 {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	max-width: 400px;
+	width: 100%;
+}
+
+select, input {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 15px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type="submit"] {
+	background-color: #28a745;
+	color: white;
+	cursor: pointer;
+}
+
+input[type="submit"]:hover {
+	background-color: #218838;
+}
+
+.chart {
+	height: 37rem;
+	display: flex;
+	justify-content: center;
+	width: 20rem;
+	align-items: center;
+	flex-direction: row;
+	/* background-color: #218838; */
+	/* padding: 12px; */
+	align-content: flex-start;
+	flex-wrap: nowrap;
+}
+
+/* Add this CSS to your stylesheet */
+.card.hover {
+	transition: transform 0.3s ease-in-out;
+}
+
+.card.hover:hover {
+	transform: scale(1.05);
+}
+
+.result_profile{
+	display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.result_profile-photo{
+	border-radius: 50%;
+}
+
