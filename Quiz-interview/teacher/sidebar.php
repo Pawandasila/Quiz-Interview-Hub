@@ -26,6 +26,18 @@
     </li>
 
     <li class="nav-item">
+      <a class="nav-link" href="pyq.php">
+        <span class="menu-title">PYQ</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="study_material.php">
+        <span class="menu-title">Study Material</span>
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link" href="create-test.php">
         <span class="menu-title">Create Test </span>
       </a>

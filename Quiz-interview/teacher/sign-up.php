@@ -143,7 +143,7 @@ if (isset($_POST['register'])) {
     if (empty($errors)) {
 
         // Hash the password
-        $hashedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $hashedPassword = $_POST['password'];
 
         // Check if the email already exists
         $stmt = mysqli_prepare($con, "SELECT * FROM teacher_login WHERE Email = ?");

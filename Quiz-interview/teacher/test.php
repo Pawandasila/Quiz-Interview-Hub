@@ -51,14 +51,14 @@ session_start();
     <div class="container-scroller">
         <!-- partial:../../partials/_navbar.html -->
         <?php
-     include "navbar.php";
-     ?>
+        include "navbar.php";
+        ?>
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- partial:../../partials/_sidebar.html -->
             <?php
-        include "sidebar.php";
-        ?>
+            include "sidebar.php";
+            ?>
             <!-- partial -->
             <div class="main-panel table-responsive" style=" height: 50%; overflow: scroll;">
                 <div class="content-wrapper">
@@ -153,21 +153,21 @@ session_start();
         </div>
     </div>
 
-    <?php 
+    <?php
     include "jquery.php";
     ?>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Event listener for filter change
-            $('#filter').change(function () {
+            $('#filter').change(function() {
                 var selectedValue = $(this).val();
 
                 // Hide all rows initially
                 $('#category tr').hide();
 
                 // Show rows with the selected value in the Test Type column
-                $('#category tr').each(function () {
+                $('#category tr').each(function() {
                     var testType = $(this).find('td:eq(5)').text().trim();
                     // alert(testType);
                     if (selectedValue === testType) {

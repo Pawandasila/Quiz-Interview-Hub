@@ -1,5 +1,20 @@
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "quiz";
 
-<div class="pyq_model model-container" id="study_material" style="display: none;">
+// Create connection
+$con = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+?>
+
+
+<div class="study_material model-container" id="study_material" style="display: block;">
     <div id="contentIcon4" class="tab-content" style="display: block;">
         <ul class="nav nav-tabs" id="tabsIcon4">
             <li class="nav-item">
@@ -18,15 +33,17 @@
                         <div class="mb-3">
                             <label for="subject" class="form-label">Subjects:</label>
                             <select name="subject" id="subject" class="form-select">
-                                <option value="" selected="selected">Select subject</option>
+                            <?php
+                            $selectPYQ = mysqli_query($con, "SELECT * FROM pyq");
+                            $PYQ_opt = mysqli_fetch_all($selectPYQ, MYSQLI_ASSOC);
+                            ?>
+                            <option value="0">Select company name</option>
+                            <?php foreach ($PYQ_opt as $PYQ_opt_value) : ?>
+                                <option value="<?php echo $PYQ_opt_value['id']; ?>"><?php echo $PYQ_opt_value['company_name']; ?></option>
+                            <?php endforeach; ?>
                             </select>
                         </div>
-                        <div class="mb-3">
-                            <label for="topic" class="form-label">Topics:</label>
-                            <select name="topic" id="topic" class="form-select">
-                                <option value="" selected="selected">Please select subject first</option>
-                            </select>
-                        </div>
+                        
                         <button type="submit" class="btn btn-success">Submit</button>
                     </form>
                 </div>

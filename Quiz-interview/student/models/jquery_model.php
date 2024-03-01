@@ -15,8 +15,7 @@
     item.addEventListener('click', event => {
       if (event.target.classList.contains('dropdown-toggle')) {
         event.target.classList.toggle('toggle-change');
-      }
-      else if (event.target.parentElement.classList.contains('dropdown-toggle')) {
+      } else if (event.target.parentElement.classList.contains('dropdown-toggle')) {
         event.target.parentElement.classList.toggle('toggle-change');
       }
     });
@@ -25,8 +24,8 @@
 
 <!-- Tab Switching Script -->
 <script>
-  $(document).ready(function () {
-    $('#tabsIcon1 a').on('click', function (e) {
+  $(document).ready(function() {
+    $('#tabsIcon1 a').on('click', function(e) {
       e.preventDefault();
       $(this).tab('show');
     });
@@ -35,15 +34,15 @@
 
 <!-- Modal Toggle Script -->
 <script>
-  $(document).ready(function () {
-    $('.icon-item').click(function (e) {
+  $(document).ready(function() {
+    $('.icon-item').click(function(e) {
       e.preventDefault();
       var targetModal = $(this).data('modal-target');
       $(targetModal).modal('toggle'); // 'toggle' instead of 'show'
     });
 
     // Handle close button click within the modal
-    $('.modal').on('hidden.bs.modal', function () {
+    $('.modal').on('hidden.bs.modal', function() {
       // Optional: reset form fields on modal close
       $(this).find('form')[0].reset();
     });
@@ -94,7 +93,7 @@
 <!-- Chart.js Script for Pie Chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Pie Chart Data
     var data = {
       labels: ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5"],
@@ -129,27 +128,54 @@
       },
       dsa: {
         result: "Pass",
-        subjects: [
-          { name: "Data Structures", marks: 90, grade: "A+", points: 4.0 },
-          { name: "Algorithms", marks: 85, grade: "A", points: 3.7 },
+        subjects: [{
+            name: "Data Structures",
+            marks: 90,
+            grade: "A+",
+            points: 4.0
+          },
+          {
+            name: "Algorithms",
+            marks: 85,
+            grade: "A",
+            points: 3.7
+          },
           // Add more subjects as needed
         ],
         percentage: "92%", // Assuming the percentage based on marks
       },
       test2: {
         result: "Fail",
-        subjects: [
-          { name: "C++ Programming", marks: 70, grade: "B", points: 3.0 },
-          { name: "Software Engineering", marks: 65, grade: "B-", points: 2.7 },
+        subjects: [{
+            name: "C++ Programming",
+            marks: 70,
+            grade: "B",
+            points: 3.0
+          },
+          {
+            name: "Software Engineering",
+            marks: 65,
+            grade: "B-",
+            points: 2.7
+          },
           // Add more subjects as needed
         ],
         percentage: "68%", // Assuming the percentage based on marks
       },
       test3: {
         result: "Pass",
-        subjects: [
-          { name: "Java Programming", marks: 88, grade: "A", points: 3.9 },
-          { name: "Web Development", marks: 80, grade: "A-", points: 3.5 },
+        subjects: [{
+            name: "Java Programming",
+            marks: 88,
+            grade: "A",
+            points: 3.9
+          },
+          {
+            name: "Web Development",
+            marks: 80,
+            grade: "A-",
+            points: 3.5
+          },
           // Add more subjects as needed
         ],
         percentage: "84%", // Assuming the percentage based on marks
@@ -180,7 +206,7 @@
     </thead>
     <tbody>`);
 
-      $.each(testResult.subjects, function (index, subject) {
+      $.each(testResult.subjects, function(index, subject) {
         table.find('tbody').append(`<tr>
         <td>${index + 1}</td>
         <td>${subject.name}</td>
@@ -208,10 +234,10 @@
 <!-- interview dropdown script -->
 
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Attach the event handler to the change event of the interviewer type dropdown
     // $('.form-control').hide();
-    $('#interviewerType').change(function () {
+    $('#interviewerType').change(function() {
       showDropdown($(this).val());
     });
 
@@ -226,7 +252,7 @@
         // Add dummy options based on selected value
         var dummyNames = selectedValue === 'HR' ? ['HR1', 'HR2', 'HR3'] : ['Teacher1', 'Teacher2', 'Teacher3'];
 
-        $.each(dummyNames, function (index, name) {
+        $.each(dummyNames, function(index, name) {
           var option = $('<option>', {
             value: name,
             text: name
@@ -248,74 +274,10 @@
       }
     }
   });
-
 </script>
 
-<!-- for study material madel -->
-<script>
-  var subjectObject = {
-    "Front-end": {
-      "HTML": ["Links", "Images", "Tables", "Lists"],
-      "CSS": ["Borders", "Margins", "Backgrounds", "Float"],
-      "JavaScript": ["Variables", "Operators", "Functions", "Conditions"]
-    },
-    "Back-end": {
-      "PHP": ["Variables", "Strings", "Arrays"],
-      "SQL": ["SELECT", "UPDATE", "DELETE"]
-    },
-    "ToC": {
-      "Automata Theory": ["Regular Languages", "Context-Free Languages", "Turing Machines"],
-      "Formal Languages": ["Regular Expressions", "Context-Free Grammars"]
-    },
-    "CoA": {
-      "Computer Organization": ["Registers", "Memory Hierarchy", "Assembly Language"],
-      "Digital Logic": ["Logic Gates", "Boolean Algebra"]
-    },
-    "DSA": {
-      "Sorting Algorithms": ["Bubble Sort", "Merge Sort", "Quick Sort"],
-      "Data Structures": ["Linked Lists", "Trees", "Graphs"]
-    },
-    "Discrete": {
-      "Propositional Logic": ["Truth Tables", "Logical Equivalences"],
-      "Set Theory": ["Sets", "Operations on Sets"]
-    },
-    "Java": {
-      "Core Java": ["Classes", "Inheritance", "Polymorphism"],
-      "Advanced Java": ["Servlets", "JSP"]
-    },
-    "C": {
-      "Basics of C": ["Variables", "Control Statements"],
-      "Advanced C": ["Pointers", "Structures"]
-    },
-    "C++": {
-      "Object-Oriented Concepts": ["Classes", "Inheritance", "Polymorphism"],
-      "STL": ["Vectors", "Maps", "Algorithms"]
-    },
-    "Cybersecurity": {
-      "Network Security": ["Firewalls", "Encryption"],
-      "Ethical Hacking": ["Penetration Testing", "Security Auditing"]
-    }
-  };
+<!-- study material -->
 
-  window.onload = function () {
-    var subjectSel = document.getElementById("subject");
-    var topicSel = document.getElementById("topic");
-
-    for (var x in subjectObject) {
-      subjectSel.options[subjectSel.options.length] = new Option(x, x);
-    }
-
-    subjectSel.onchange = function () {
-      // Empty Topics dropdown
-      topicSel.length = 1;
-
-      // Display correct values
-      for (var y in subjectObject[this.value]) {
-        topicSel.options[topicSel.options.length] = new Option(y, y);
-      }
-    }
-  }
-</script>
 
 <!-- polar chart -->
 <script>
@@ -338,7 +300,7 @@
       responsive: true,
       tooltips: {
         callbacks: {
-          label: function (tooltipItem, data) {
+          label: function(tooltipItem, data) {
             return data.labels[tooltipItem.index] + ': ' + data.datasets[0].data[tooltipItem.index];
           }
         }
@@ -366,9 +328,9 @@
 <!-- to handle the result analysis card -->
 
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
     // Assuming your card title has a class 'test-title'
-    $('.test-title').each(function () {
+    $('.test-title').each(function() {
       var resultCell = $(this).siblings('.result-cell'); // Assuming the result cell has a class 'result-cell'
       var result = resultCell.text().trim().toLowerCase();
 
@@ -397,19 +359,20 @@
     var status = $('#status').text();
     var startInterviewBtn = $('#startInterviewBtn');
     var payButton = $('#rzp-button1');
-    
+
     console.log(status);
     // startInterviewBtn.on('click', function(){
     // })
-    if(status =='Pending'){
+    if (status == 'Pending') {
       console.log('first');
     }
-    
+
   }
 
   // Call the updateButton function on page load
-  $(document).ready(function () {
-    updateButton();9
+  $(document).ready(function() {
+    updateButton();
+    9
   });
 
   var options = {
@@ -419,7 +382,7 @@
     "name": "Acme Corp",
     "description": "Test Transaction",
     "image": "https://images.pexels.com/photos/1692984/pexels-photo-1692984.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-    "handler": function (response) {
+    "handler": function(response) {
       console.log(response);
     },
     "prefill": {
@@ -435,7 +398,7 @@
     }
   };
   var rzp1 = new Razorpay(options);
-  rzp1.on('payment.failed', function (response) {
+  rzp1.on('payment.failed', function(response) {
     alert(response.error.code);
     alert(response.error.description);
     alert(response.error.source);
@@ -444,7 +407,7 @@
     alert(response.error.metadata.order_id);
     alert(response.error.metadata.payment_id);
   });
-  document.getElementById('rzp-button1').onclick = function (e) {
+  document.getElementById('rzp-button1').onclick = function(e) {
     rzp1.open();
     e.preventDefault();
   }

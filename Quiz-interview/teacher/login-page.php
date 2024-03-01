@@ -112,35 +112,31 @@ if (!$con) {
 if (isset($_POST["login"])) {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
-    
+
     // Query to check if the username exists
-    $query = "SELECT * FROM student_login WHERE email = '$username'";
+    $query = "SELECT * FROM student_login WHERE Email = '$username'";
     $result = mysqli_query($con, $query);
 
     if (mysqli_num_rows($result) > 0) {
         // echo "<script>alert('yes');</script>";
         $row = mysqli_fetch_assoc($result);
-        $hashedPassword = $row['password'];
+        $hashedPassword = $row['Password'];
 
         echo "<script>alert('Entered Password: " . $password . "');</script>";
 
         echo "<script>alert('Hashed Password from Database: " . $hashedPassword . "');</script>";
-        
 
         // // Check if the entered password matches the hashed password
-        if (password_verify($password, $hashedPassword)) {
+        if ($password == $hashedPassword) {
 
             echo '<script>alert("Login successful");</script>';
-        } 
-        else {
+        } else {
             echo '<script>alert("Invalid username or password");</script>';
         }
-
     } else {
         echo '<script>alert("Invalid username or password");</script>';
     }
 }
-
 
 mysqli_close($con);
 

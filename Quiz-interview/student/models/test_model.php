@@ -8,7 +8,7 @@ $dbname = "quiz";
 $con = mysqli_connect($servername, $username, $password, $dbname);
 ?>
 
-<div class="test_model model-container" id="test_model" style="display: block;">
+<div class="test_model model-container" id="test_model" style="display: none;">
   <div id="contenticon1" class="tab-content" style="display: block;">
 
     <!-- Tabs -->
@@ -132,14 +132,6 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
           $con->close();
 
           ?>
-
-
-
-          <!-- Second Test Card -->
-
-
-          <!-- Third Test Card -->
-
         </div>
       </div>
 

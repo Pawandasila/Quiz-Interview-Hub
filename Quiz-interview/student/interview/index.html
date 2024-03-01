@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online video call</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        #join-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            margin: 20px;
+        }
+
+        #join-btn:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            height: 100vh;
+            display: flex;
+            justify-content: space-around;
+            overflow: hidden;
+        }
+
+        #video-stream {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            height: 70vh;
+            padding: 20px;
+        }
+
+        .video-container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stream-view{
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stream-wrapper {
+            flex: 1;
+            /* Occupy remaining space */
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            box-sizing: border-box;
+            /* Include padding in width calculation */
+        }
+
+
+        #stream-controls {
+            margin-top: 20px;
+            display: none;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .leave-btn,
+        .mic-btn,
+        .video-btn {
+            background-color: #f44336;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .leave-btn:hover,
+        .mic-btn:hover,
+        .video-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        /* Chatbox Styles */
+        #chat-container {
+            background-color: #f2f2f2;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 20%;
+            overflow-y: auto;
+        }
+
+        .message-container {
+            height: 70%;
+            width: auto;
+            overflow: scroll;
+        }
+
+        .message-container p {
+            border: 1px solid brown;
+            text-align: center;
+            border-radius: 14px;
+            padding: 6px;
+        }
+
+        .chat-function {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 23px;
+        }
+
+        #chat-input {
+            width: calc(100% - 20px);
+            padding: 5px;
+            margin-top: 10px;
+        }
+
+        #send-btn {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #send-btn:hover {
+            background-color: #45a049;
+        }
+
+        .agora_video_player{
+            width: auto;
+            border-radius: 50%;
+        }
+
+        .active {
+    /* Define styles for the active state */
+    background-color: #ccc; /* Change to your preferred color */
+    /* Add any other styles you want to apply when the element is active */
+}
+
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="chatbox" id="chat-container">
+            <div class="message-container">
+                <!-- <p>Welcome to chat</p> -->
+            </div>
+            <div class="chat-function">
+                <button id="join-btn">Join class</button>
+                <input type="text" id="chat-input" placeholder="Type your message...">
+                <button id="send-btn">Send</button>
+            </div>
+        </div>
+
+        <div class="stream-wrapper">
+            <div class="stream-view">
+                <div id="screenShare"></div>
+                <div id="video-stream"></div>
+            </div>
+
+            <div id="stream-controls">
+                <button id="leave-btn" class="control-btn">Leave Stream</button>
+                <button id="mic-btn" class="control-btn">Mic Off</button>
+                <button id="video-btn" class="control-btn">Video Off</button>
+                <button id="screen-share-btn" class="control-btn">Screen Share</button>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="AgoraRTC_N-4.20.0.js"></script>
+    <!-- <script src="Agora-chat.js"></script> -->
+    <script src="script.js"></script>
+</body>
+
+</html>

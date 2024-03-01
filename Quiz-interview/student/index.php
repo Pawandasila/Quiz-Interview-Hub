@@ -215,10 +215,12 @@
 
         <?php
         include "models/pyq_model.php";
+        // This one is of studyMaterial
         ?>
 
         <?php
         include "models/study_material_model.php"
+        // This one is of PYQ
         ?>
 
       </div>
