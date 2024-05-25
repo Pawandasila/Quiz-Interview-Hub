@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -90,7 +92,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title mb-4">Test Details</h4>
-                                <form class="row g-3" method="post">
+                                <form class="row g-3" method="post" id="form-initial">
                                     <div class="col-md-4">
                                         <label for="validationCustom01" class="form-label">Test name</label>
                                         <input type="text" class="form-control" id="TestName" required />
@@ -124,6 +126,12 @@
                             </div>
                         </div>
                     </div>
+
+                    <?php
+                    //  include "fetching_question/questions.php" 
+                     ?>
+
+
                     <hr style="margin-bottom: 20px" />
                     <!-- table container -->
                     <div class="section" id="section">
@@ -153,75 +161,76 @@
 
         function addNewSection() {
             var sectionTemplate = `
-            <form method="post" action="" class="section">
-                <div class="col-md-12 grid-margin stretch-card table-responsive">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="modal-header">
-                                <div class="modal-title">
-                                    Section
-                                    <input type="text" class="form-control m-2" name="sectionName" placeholder="Enter The Section Name" required>
-                                    <input type="file" class="form-control" id="data" name="data">
+                <form method="post" action="" class="section">
+                    <div class="col-md-12 grid-margin stretch-card table-responsive">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="modal-header">
+                                    <div class="modal-title">
+                                        Section
+                                        <input type="text" class="form-control m-2 section-name" name="sectionName" placeholder="Enter The Section Name" required>
+                                        <input type="file" class="form-control" id="data" name="data">
+                                        <input type="number" class="form-control m-2 section-marks" name="marks" placeholder="Enter Marks for Section" required>
+                                    </div>
+                                    <button type="button" class="btn-close" aria-label="Close"></button>
                                 </div>
-                                <button type="button" class="btn-close" aria-label="Close"></button>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table table-hover" id="myTable">
-                                    <thead>
-                                        <tr>
-                                            <th>q.mo</th>
-                                            <th style="width:70%">Question</th>
-                                            <th>Option a</th>
-                                            <th>Option b</th>
-                                            <th>Option c</th>
-                                            <th>Option d</th>
-                                            <th>Correct Answer</th>
-                                            <th>Remove</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="category">
-                                        <tr>
-                                            <td><input type="text" value="1"></td>
-                                            <td class="editable-cell"><input type="text" value="Tests details"></td>
-                                            <td class="editable-cell"><input type="text" value="option a"></td>
-                                            <td class="editable-cell"><input type="text" value="option b"></td>
-                                            <td class="editable-cell"><input type="text" value="option c"></td>
-                                            <td class="editable-cell"><input type="text" value="option d"></td>
-                                            <td>
-                                                <div class="d-flex justify-content-center">
-                                                    <select class="form-select">
-                                                        <option selected disabled>Select Answer</option>
-                                                        <option value="1">Option 1</option>
-                                                        <option value="2">Option 2</option>
-                                                        <option value="3">Option 3</option>
-                                                        <option value="4">Option 4</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex justify-content-center">
-                                                    <button type="button" class="btn btn-danger delete-button">Remove</button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card-footer">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-3">
-                                        <button type="button" class="btn btn-danger add-row-button">Add New Row</button>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="myTable">
+                                        <thead>
+                                            <tr>
+                                                <th>q.mo</th>
+                                                <th style="width:70%">Question</th>
+                                                <th>Option a</th>
+                                                <th>Option b</th>
+                                                <th>Option c</th>
+                                                <th>Option d</th>
+                                                <th>Correct Answer</th>
+                                                <th>Remove</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="category">
+                                            <tr>
+                                                <td><input type="text" value="1"></td>
+                                                <td class="editable-cell"><input type="text" class="question-text" value="Tests details"></td>
+                                                <td class="editable-cell"><input type="text" class="option1" value="option a"></td>
+                                                <td class="editable-cell"><input type="text" class="option2" value="option b"></td>
+                                                <td class="editable-cell"><input type="text" class="option3" value="option c"></td>
+                                                <td class="editable-cell"><input type="text" class="option4" value="option d"></td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <select class="form-select correct-answer">
+                                                            <option selected disabled>Select Answer</option>
+                                                            <option value="1">Option 1</option>
+                                                            <option value="2">Option 2</option>
+                                                            <option value="3">Option 3</option>
+                                                            <option value="4">Option 4</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex justify-content-center">
+                                                        <button type="button" class="btn btn-danger delete-button">Remove</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-3">
+                                            <button type="button" class="btn btn-danger add-row-button">Add New Row</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
-            `;
-            
+                </form>
+        `;
+
             $("#sectionContent").append(sectionTemplate);
-            
+
             var $newSection = $("#sectionContent").children().last();
             handleSectionEvents($newSection);
             $('.btn-info').show();
@@ -256,25 +265,25 @@
                                 let columns = line.split(",");
                                 let newRow = "<tr>";
                                 newRow += `<td><input type="text" value="${index + 1}"></td>`;
-                                newRow += `<td contenteditable="true" class="editable-cell"><input type="text" value="${columns[0]}"></td>`;
+                                newRow += `<td contenteditable="true" class="editable-cell"><input type="text" class="question-text" value="${columns[0]}"></td>`;
                                 for (let i = 1; i < 5; i++) {
-                                    newRow += `<td contenteditable="true" class="editable-cell"><input type="text" value="${columns[i]}"></td>`;
+                                    newRow += `<td contenteditable="true" class="editable-cell"><input type="text" class="option${i}" value="${columns[i]}"></td>`;
                                 }
                                 let dropdownValues = columns.slice(1, 5);
                                 newRow += `<td>
-                                    <div class="d-flex justify-content-center">
-                                        <select class="form-select">`;
+                                <div class="d-flex justify-content-center">
+                                    <select class="form-select correct-answer">`;
                                 dropdownValues.forEach((value, i) => {
                                     newRow += `<option value="${i + 1}" ${columns[5] == value ? "selected" : ""}>${value}</option>`;
                                 });
                                 newRow += `</select>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-danger delete-button">Remove</button>
-                                    </div>
-                                </td>`;
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn btn-danger delete-button">Remove</button>
+                                </div>
+                            </td>`;
                                 newRow += "</tr>";
                                 tbody.append(newRow);
                             }
@@ -294,18 +303,41 @@
                 e.preventDefault();
                 addNewSection();
             });
-        });
-    </script>
 
-    <script>
-        $(document).ready(function() {
             $("#SumbitForm").click(function() {
                 var testName = $('#TestName').val();
                 var CompanyName = $('#CompanyName').val();
                 var testType = $('#testType').val();
                 var startDateAndTime = $('#startDateAndTime').val();
                 var endDateAndTime = $('#endDateAndTime').val();
-                alert(testName + ', ' + CompanyName + ', ' + testType + ', ' + startDateAndTime + ', ' + endDateAndTime);
+
+                var sections = [];
+                $("#sectionContent .section").each(function() {
+                    var sectionName = $(this).find(".section-name").val();
+                    var marks = $(this).find(".section-marks").val();
+                    var questions = [];
+                    $(this).find("#myTable tbody tr").each(function() {
+                        var questionText = $(this).find(".question-text").val();
+                        var option1 = $(this).find(".option1").val();
+                        var option2 = $(this).find(".option2").val();
+                        var option3 = $(this).find(".option3").val();
+                        var option4 = $(this).find(".option4").val();
+                        var correctAnswer = $(this).find(".correct-answer").val();
+                        questions.push({
+                            questionText: questionText,
+                            option1: option1,
+                            option2: option2,
+                            option3: option3,
+                            option4: option4,
+                            correctAnswer: correctAnswer
+                        });
+                    });
+                    sections.push({
+                        sectionName: sectionName,
+                        marks: marks,
+                        questions: questions
+                    });
+                });
 
                 $.ajax({
                     url: "action.php",
@@ -316,7 +348,8 @@
                         CompanyName: CompanyName,
                         testType: testType,
                         startDateAndTime: startDateAndTime,
-                        endDateAndTime: endDateAndTime
+                        endDateAndTime: endDateAndTime,
+                        sections: sections
                     },
                     success: function(response) {
                         location.reload();
@@ -330,6 +363,9 @@
             });
         });
     </script>
+
+    
+
 </body>
 
 </html>

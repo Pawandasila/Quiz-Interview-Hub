@@ -4,8 +4,7 @@
     <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
   </div>
   <div class="navbar-menu-wrapper d-flex align-items-stretch">
-    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-      data-toggle="offcanvas">
+    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
       <span class="mdi mdi-menu"></span>
     </button>
     <div class="search-field d-none d-md-block">
@@ -20,13 +19,12 @@
     </div>
     <ul class="navbar-nav navbar-nav-right">
       <li class="nav-item nav-logout d-none d-lg-block">
-        <div class="form-check form-switch" >
-          <input class="form-check-input" type="checkbox" role="switch" checked  style="padding: 7px;"/>
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" checked style="padding: 7px;" />
         </div>
       </li>
       <li class="nav-item nav-profile dropdown">
-        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown"
-          aria-expanded="false">
+        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
           <div class="nav-profile-img">
             <img src="assets/images/faces/face1.jpg" alt="Profile Image">
             <span class="availability-status online"></span>
@@ -150,16 +148,15 @@
               </a>
             </li> -->
     </ul>
-    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-      data-toggle="offcanvas">
+    <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
       <span class="mdi mdi-menu"></span>
     </button>
   </div>
 </nav>
 
 <?php
-        $server = "localhost";
-        $username = "root";
-        $password = "";
-        $con = mysqli_connect($server, $username, $password, "food_order");    
-      ?>
+  $server = "localhost";
+  $username = "root";
+  $password = "";
+  $con = mysqli_connect($server, $username, $password, "quiz");
+?>

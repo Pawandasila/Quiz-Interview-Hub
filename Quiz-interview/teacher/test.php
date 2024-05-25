@@ -49,13 +49,13 @@ session_start();
 
 <body>
     <div class="container-scroller">
-        <!-- partial:../../partials/_navbar.html -->
+
         <?php
         include "navbar.php";
         ?>
-        <!-- partial -->
+
         <div class="container-fluid page-body-wrapper">
-            <!-- partial:../../partials/_sidebar.html -->
+
             <?php
             include "sidebar.php";
             ?>
@@ -106,33 +106,49 @@ session_start();
                                             </tr>
                                         </thead>
                                         <tbody id='category'>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Mathematics Olympiad</td>
-                                                <td>ABC Educational Services</td>
-                                                <td>2024-01-25 09:00 AM</td>
-                                                <td>2024-01-25 11:00 AM</td>
-                                                <td>Main</td>
-                                                <td>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <!-- Edit button -->
-                                                        <button class="btn btn-warning edit-link">
-                                                            <i class="fas fa-edit me-2"></i>
+                                            <?php
+                                            // Fetch test data from the database
+                                            $testsQuery = "SELECT * FROM `main_test`";
+                                            $testsResult = mysqli_query($con, $testsQuery);
+
+                                            // Check if there are any tests available
+                                            if (mysqli_num_rows($testsResult) > 0) {
+                                                while ($test = mysqli_fetch_assoc($testsResult)) {
+                                                    // Output table row for each test
+                                                    echo "<tr>";
+                                                    // Output table row for each test
+                                                    echo "<tr data-id='" . $test['test_id'] . "'>";
+                                                    echo "<td>" . $test['test_name'] . "</td>";
+                                                    echo "<td>" . $test['company_name'] . "</td>";
+                                                    echo "<td>" . $test['start_date_time'] . "</td>";
+                                                    echo "<td>" . $test['end_date_time'] . "</td>";
+                                                    echo "<td>" . $test['test_type'] . "</td>";
+                                                    echo "<td>
+                                                    <div class='d-flex justify-content-between align-items-center'>
+                                                        <button class='btn btn-warning edit-link'>
+                                                            <i class='fas fa-edit me-2'></i>
                                                         </button>
-                                                        <!-- Delete button -->
-                                                        <button type="button" class="btn btn-danger delete-button">
-                                                            <i class="fas fa-trash-alt me-2 "></i>
+                                                        <button type='button' class='btn btn-danger delete-button'>
+                                                            <i class='fas fa-trash-alt me-2'></i>
                                                         </button>
                                                     </div>
-                                                </td>
-                                                <td>
-                                                    <!-- Done button -->
-                                                    <button class="btn btn-success done-button">
-                                                        <i class="fas fa-check me-1"></i>Done
+                                                </td>";
+                                                    echo "<td>
+                                                    <button class='btn btn-success done-button'>
+                                                        <i class='fas fa-check me-1'></i>Done
                                                     </button>
-                                                </td>
-                                            </tr>
-                                            <!-- Add more rows for additional tests as needed -->
+                                                </td>";
+                                                    echo "</tr>";
+                                                }
+                                            } else {
+                                                // No tests available
+                                                echo "<tr>
+                                                <td colspan='8' class='text-center'>No tests available</td>
+                                            </tr>";
+                                            }
+
+                                            ?>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -169,18 +185,21 @@ session_start();
                 // Show rows with the selected value in the Test Type column
                 $('#category tr').each(function() {
                     var testType = $(this).find('td:eq(5)').text().trim();
-                    // alert(testType);
-                    if (selectedValue === testType) {
-                        alert("The selected value");
-                    }
-
-                    if (selectedValue === 'Select') {
+                    if (selectedValue === 'Select' || selectedValue === testType) {
                         $(this).show();
                     }
                 });
             });
+
+            // Event listener for edit button
+            $('.edit-link').click(function() {
+                var testId = $(this).closest('tr').data('id');
+                alert(testId)
+                window.location.href = 'fetching_question/questions.php?test_id=' + testId;
+            });
         });
     </script>
+
 
 
 
