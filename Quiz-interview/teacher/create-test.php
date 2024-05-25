@@ -121,18 +121,13 @@
                                         </button>
                                     </div>
                                 </form>
-
-
                             </div>
                         </div>
                     </div>
                     <hr style="margin-bottom: 20px" />
-
                     <!-- table container -->
                     <div class="section" id="section">
-                        <div id="sectionContent">
-
-                        </div>
+                        <div id="sectionContent"></div>
                         <div class="button">
                             <button type="submit" id="SumbitForm" class="btn btn-info btn-hover">Done</button>
                         </div>
@@ -141,8 +136,7 @@
 
                 <footer class="footer">
                     <div class="container-fluid d-flex justify-content-between">
-                        <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © to the
-                            Team</span>
+                        <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © to the Team</span>
                     </div>
                 </footer>
             </div>
@@ -188,11 +182,11 @@
                                     <tbody id="category">
                                         <tr>
                                             <td><input type="text" value="1"></td>
-                                            <td  class="editable-cell"><input type="text" value="Tests details"></td>
-                                            <td  class="editable-cell"><input type="text" value="option a"></td>
-                                            <td  class="editable-cell"><input type="text" value="option b"></td>
-                                            <td  class="editable-cell"><input type="text" value="option c"></td>
-                                            <td  class="editable-cell"><input type="text" value="option d"></td>
+                                            <td class="editable-cell"><input type="text" value="Tests details"></td>
+                                            <td class="editable-cell"><input type="text" value="option a"></td>
+                                            <td class="editable-cell"><input type="text" value="option b"></td>
+                                            <td class="editable-cell"><input type="text" value="option c"></td>
+                                            <td class="editable-cell"><input type="text" value="option d"></td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
                                                     <select class="form-select">
@@ -225,21 +219,17 @@
                 </div>
             </form>
             `;
-
-
-            // Append the new section template to the section container
+            
             $("#sectionContent").append(sectionTemplate);
-            // Event handling for the new section
-            var $newSection = $("#section").children().last();
+            
+            var $newSection = $("#sectionContent").children().last();
             handleSectionEvents($newSection);
             $('.btn-info').show();
         }
 
-
         // Function to handle events within a section
         function handleSectionEvents($section) {
             $section.find(".add-row-button").on("click", function() {
-                alert('btn clicked');
                 var lastRowNumber = parseInt($section.find("#myTable tbody tr:last td:first input").val()) || 0;
                 var newRowNumber = lastRowNumber + 1;
                 var newRow = $section.find("#myTable tbody tr:first").clone();
@@ -318,11 +308,18 @@
                 alert(testName + ', ' + CompanyName + ', ' + testType + ', ' + startDateAndTime + ', ' + endDateAndTime);
 
                 $.ajax({
-                    url: "action.php", 
-                    type: "post", 
-                    data: 'action=insertdata&testName=' + testName + '&CompanyName=' + CompanyName + '&testType=' + testType + '&startDateAndTime=' + startDateAndTime + '&endDateAndTime=' + endDateAndTime, 
+                    url: "action.php",
+                    type: "post",
+                    data: {
+                        action: 'insertdata',
+                        testName: testName,
+                        CompanyName: CompanyName,
+                        testType: testType,
+                        startDateAndTime: startDateAndTime,
+                        endDateAndTime: endDateAndTime
+                    },
                     success: function(response) {
-                        window.page.reload();
+                        location.reload();
                         console.log(response);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
