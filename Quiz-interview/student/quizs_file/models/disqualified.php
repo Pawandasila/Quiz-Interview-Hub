@@ -1,5 +1,5 @@
 <!-- modle for disqualification -->
-<div class="modal fade" id="disqualificationModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-keyboard="false">
+<div class="modal fade" id="disqualificationModal" tabindex="-1" data-bs-back drop="static" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-danger text-light">
@@ -10,7 +10,7 @@
                 <p class="text-danger">Your results have been invalidated. Click the button below to continue.</p>
             </div>
             <div class="modal-footer">
-                <a href="result.php" class="btn btn-danger">Continue</a>
+                <a href="result.php?id=123" class="btn btn-danger">Continue</a>
             </div>
         </div>
     </div>

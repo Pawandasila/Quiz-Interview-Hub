@@ -9,52 +9,38 @@
 <script>
     let times = 0;
 
-    // document.getElementById('startTestButton').addEventListener('click', function() {
-    //     var elem = document.documentElement;
-    //     if (elem.requestFullscreen) {
-    //         elem.requestFullscreen();
-    //     } else if (elem.webkitRequestFullscreen) {
-    //         /* Safari */
-    //         elem.webkitRequestFullscreen();
-    //     } else if (elem.msRequestFullscreen) {
-    //         /* IE11 */
-    //         elem.msRequestFullscreen();
-    //     }
+    document.getElementById('startTestButton').addEventListener('click', function() {
 
-    // document.querySelector('.start-test-container').style.display = 'none';
-    // Show the quiz container
-    // document.querySelector('.container-fluid').style.display = 'block';
-
-    // $(document).ready(function() {
-    //     var timeInSeconds = 5.1 * 60; // 5 minutes in seconds
-
-    //     var countdownInterval = setInterval(function() {
-    //         var hours = Math.floor(timeInSeconds / 3600);
-    //         var minutes = Math.floor((timeInSeconds % 3600) / 60);
-    //         var seconds = timeInSeconds % 60;
-
-    //         $(".time").html(hours + "hr " + minutes + "min " + seconds + "sec");
-
-    //         // Check if the time is less than 5 minutes (300 seconds)
-    //         if (timeInSeconds < 300) {
-    //             // Change the background color to red
-    //             $(".quiz-timer").addClass("badge-danger");
-    //             $(".timer-alert").show(); // Display the alert div
-    //         }
+        function initializeFullScreen() {
+            var elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        }
+        initializeFullScreen();
 
 
-    //         if (timeInSeconds === 0) {
-    //             clearInterval(countdownInterval);
-    //             // Open the Bootstrap modal when the time is up
-    //             $('#timeUpModal').modal('show');
-    //         } else {
-    //             timeInSeconds--;
-    //         }
-    //     }, 1000);
-    // });
-    // });
+        document.querySelector('.start-test-container').style.display = 'none';
+
+        // Show the quiz container
+
+        document.querySelector('.container-fluid').style.display = 'block';
+
+
+
+        showQuestion(currentQuestion);
+        updateNavigationButtons();
+
+
+    });
+
+    // right click disabled
     // document.addEventListener('contextmenu', function(event) {
-    // event.preventDefault();
+    //     event.preventDefault();
     // });
 
     document.addEventListener('fullscreenchange', function(event) {
@@ -62,9 +48,11 @@
             // Display the warning modal
             // alert(times);
             times++;
+
+
             if (!document.fullscreenElement && times > 0) {
                 // Display the warning modal
-                if (times == 2) {
+                if (times == 3) {
                     // Show the disqualification modal
                     $('#warningModal').modal('hide');
                     $('#disqualificationModal').modal('show');
@@ -75,50 +63,34 @@
 
         }
     });
-
-    document.getElementById('retryFullScreen').addEventListener('click', function() {
-        var elem = document.documentElement;
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen();
-        } else if (elem.webkitRequestFullscreen) {
-            /* Safari */
-            elem.webkitRequestFullscreen();
-        } else if (elem.msRequestFullscreen) {
-            /* IE11 */
-            elem.msRequestFullscreen();
-        }
-
-        // Close the warning modal
-        $('#warningModal').modal('hide');
-    });
 </script>
 
 <!-- quiz jquery -->
 <script>
     $(document).ready(function() {
         let currentQuestion = 1;
-        let totalQuestions = 5;
+        // const totalQuestions = <?php echo $totalQuestions; ?>; // Adjust this as needed
+        const totalQuestions = 5; // Adjust this as needed
+
+        function updateHighlight() {
+            document.querySelectorAll('.digit-box').forEach(box => {
+                box.classList.remove('highlight');
+            });
+            document.querySelector('.digit-box[data-question="' + currentQuestion + '"]').classList.add('highlight');
+        }
 
         function showQuestion(questionNumber) {
-            let quizBodies = $('.quiz-list-body');
-
-            quizBodies.each(function(index) {
-                if (index + 1 === questionNumber) {
-                    $(this).css('display', 'flex');
-                } else {
-                    $(this).css('display', 'none');
-                }
-            });
+            $('.quiz-list-body').hide();
+            $('#question' + questionNumber).show();
         }
 
         function updateNavigationButtons() {
             $('.quiz-prev').prop('disabled', currentQuestion === 1);
             $('.quiz-next').prop('disabled', currentQuestion === totalQuestions);
-
-            if (currentQuestion == totalQuestions) {
-                $('.btn-3d').css('display', 'block');
+            if (currentQuestion === totalQuestions) {
+                $('.btn-3d').show();
             } else {
-                $('.btn-3d').css('display', 'none');
+                $('.btn-3d').hide();
             }
         }
 
@@ -128,6 +100,7 @@
                 $('.quiz-number').text(currentQuestion + ' / ' + totalQuestions);
                 showQuestion(currentQuestion);
                 updateNavigationButtons();
+                updateHighlight();
             }
         });
 
@@ -137,8 +110,19 @@
                 $('.quiz-number').text(currentQuestion + ' / ' + totalQuestions);
                 showQuestion(currentQuestion);
                 updateNavigationButtons();
+                updateHighlight();
             }
         });
+
+        document.querySelectorAll('.digit-box').forEach(box => {
+            box.addEventListener('click', function() {
+                currentQuestion = parseInt(this.getAttribute('data-question'));
+                updateHighlight();
+            });
+        });
+
+        updateHighlight();
+
 
         let score = [0, 0, 0, 0, 0];
         let answer = [1, 2, 3, 2, 1];
@@ -186,28 +170,60 @@
 
 <!-- uer webcam acess -->
 <script>
-    // $(document).ready(function () {
-    //     const videoSection = $('.video-section')[0];
-    //     const webcamVideo = $('#webcamVideo')[0];
+    $(document).ready(function() {
 
-    //     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    //         navigator.mediaDevices.getUserMedia({ video: true })
-    //             .then(function (stream) {
-    //                 // Assign the webcam stream to the video element
-    //                 webcamVideo.srcObject = stream;
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then(function(stream) {
+                    const videoElement = document.getElementById('webcamVideo');
+                    videoElement.srcObject = stream;
+                    videoElement.play();
+                    console.log("object")
 
-    //                 // Handle stopping the stream when the page is closed
-    //                 $(window).on('beforeunload', function () {
-    //                     stream.getTracks().forEach(track => track.stop());
-    //                 });
-    //             })
-    //             .catch(function (error) {
-    //                 console.error('Error accessing webcam:', error);
-    //             });
-    //     } else {
-    //         console.error('getUserMedia is not supported in this browser');
-    //     }
-    // });
+                    var warningCount = 0;
+
+                    $(window).on("blur focus", function(e) {
+                        var prevType = $(this).data("prevType");
+
+                        if (prevType != e.type) {
+
+                            switch (e.type) {
+                                case "blur":
+                                    warningCount++;
+
+                                    if (warningCount >= 4) {
+                                        $('#disqualificationModal').modal('show');
+                                    } else {
+                                        $('#warningModal').modal('show');
+                                    }
+
+                                    break;
+                                case "focus":
+                                    break;
+                            }
+
+                        }
+
+                        $(this).data("prevType", e.type);
+                    });
+
+                    // Event listener for the exit button
+                    $('#exit').on('click', function() {
+                        // Hide the modal
+                        $('#warningModal').modal('hide');
+                    });
+
+                })
+                .catch(function(error) {
+                    console.error('Error accessing webcam:', error);
+                });
+        } else {
+            console.error('getUserMedia is not supported in this browser');
+        }
+
+    });
 </script>
 <script>
     $(document).ready(function() {
@@ -225,24 +241,6 @@
     function displayModal() {
         $('#warningModal').modal('show');
     }
-
-    // Event listener for right-click
-    // document.addEventListener('contextmenu', function (e) {
-    //     e.preventDefault();
-    //     displayModal();
-    // });
-
-    // Event listener for key press
-    // document.addEventListener('keydown', function (e) {
-    //     e.preventDefault();
-    //     displayModal();
-    // });
-
-    // Full-screen on page load
-    // Full-screen on page load
-    //   document.addEventListener('DOMContentLoaded', function () {
-    //     document.documentElement.requestFullscreen();
-    // });
 </script>
 
 

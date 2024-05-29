@@ -1,4 +1,5 @@
 <?php
+session_start();
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -6,6 +7,18 @@ $dbname = "quiz";
 
 // Create connection
 $con = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Process quiz submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['quiz_completed'] = true;
+    header('Location: result.php');
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,8 +30,6 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
     <title>BrainBurst Quiz</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-H66XGqNhV3XWY6o05yP6L4GDOfkCHsC7jOM24QbCw9PpRRxFUbvmPUiQZQ+YAxp7uzZSFdzMyS+DgDPHtliJKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-H66XGqNhV3XWY6o05yP6L4GDOfkCHsC7jOM24QbCw9PpRRxFUbvmPUiQZQ+YAxp7uzZSFdzMyS+DgDPHtliJKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <link rel="stylesheet" href="style.css">
     <style>
         /* .quiz-container {
@@ -43,8 +54,7 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
             /* Add overflow property if content exceeds the height */
         }
 
-        .digit-box {
-            /* Adjust the styling of the digit-box as needed */
+        /* .digit-box {
             display: inline-block;
             width: 50px;
             height: 50px;
@@ -52,6 +62,21 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
             margin: 10px;
             text-align: center;
             line-height: 50px;
+        } */
+
+        .digit-box {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: #ccc;
+            margin: 10px;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+        }
+
+        .highlight {
+            background-color: yellow;
         }
 
         .card-footer {
@@ -74,95 +99,74 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
             /* Flip the video horizontally */
         }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-H66XGqNhV3XWY6o05yP6L4GDOfkCHsC7jOM24QbCw9PpRRxFUbvmPUiQZQ+YAxp7uzZSFdzMyS+DgDPHtliJKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-H66XGqNhV3XWY6o05yP6L4GDOfkCHsC7jOM24QbCw9PpRRxFUbvmPUiQZQ+YAxp7uzZSFdzMyS+DgDPHtliJKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-H66XGqNhV3XWY6o05yP6L4GDOfkCHsC7jOM24QbCw9PpRRxFUbvmPUiQZQ+YAxp7uzZSFdzMyS+DgDPHtliJKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-H66XGqNhV3XWY6o05yP6L4GDOfkCHsC7jOM24QbCw9PpRRxFUbvmPUiQZQ+YAxp7uzZSFdzMyS+DgDPHtliJKw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
-
-    <!-- start button  -->
-    <div class="start-test-container" style="height: 100vh; display: none; flex-direction:column; justify-content: center; align-items: center;">
-        <div class="important-points bg-light p-4 rounded">
-            <h2 class="mb-3">Important Points</h2>
-            <ul class="list-styled">
-                <li>You have only two chances if you accidentally exit full screen mode.</li>
-                <li>You also have two chances if you press any key on your keyboard.</li>
-                <li>Right-click functionality is disabled.</li>
-            </ul>
-        </div>
-        <button id="startTestButton" class="btn btn-primary mt-4 btn-lg">Start Test</button>
-    </div>
-
-
-
-    <div class="container-fluid" style="height: 100vh; ">
+    <div class="container-fluid" style="height: 100vh;">
         <div class="row" style="height: 100%; padding: 12px;">
-
-            <div class="col-md-9" style="display: flex;margin-top:3rem;flex-wrap: nowrap;flex-direction: column;">
-
+            <div class="col-md-9" style="display: flex; margin-top: 3rem; flex-wrap: nowrap; flex-direction: column;">
                 <div class="timer-alert badge warning text-center mb-3 rounded border border-danger" style="display: none;">
                     <p class="d-inline-block">Time is running out, please hurry up!</p>
                 </div>
 
                 <div class="quiz-container">
-                    <?php
-                    $result = mysqli_query($con, "SELECT * FROM questions");
-                    $totalQuestions = mysqli_num_rows($result); // Get the total number of questions
-                    $questionNumber = 1; // Initialize the question number
+                    <form id="quizForm" method="POST" action="">
+                        <?php
+                        $result = mysqli_query($con, "SELECT * FROM questions");
+                        $totalQuestions = mysqli_num_rows($result);
+                        $questionNumber = 1;
 
-                    // Fetch the timestamp only once outside the loop
-                    $timestamp = time(); // Adjust this based on your actual timestamp retrieval logic
+                        while ($row = mysqli_fetch_array($result)) {
+                            $question = $row["question_text"];
+                            $optiona = $row["option1"];
+                            $optionb = $row["option2"];
+                            $optionc = $row["option3"];
+                            $optiond = $row["option4"];
+                        ?>
 
-                    while ($row = mysqli_fetch_array($result)) {
-                        $question = $row["question_text"];
-                        $optiona = $row["option1"];
-                        $optionb = $row["option2"];
-                        $optionc = $row["option3"];
-                        $optiond = $row["option4"];
-                        $correct_option = $row["correct_answer"];
-                    ?>
-
-                        <div class="quiz-number badge badge-dark">
-                            <?php echo $questionNumber; ?> / <?php echo $totalQuestions; ?>
-                        </div>
-
-                        <div class="quiz-list-body" id="question<?php echo $questionNumber; ?>">
-                            <div class="quiz-list alert alert-primary">
-                                Q. <span><?php echo $question; ?></span>
+                            <div class="quiz-number badge badge-dark">
+                                <?php echo $questionNumber; ?> / <?php echo $totalQuestions; ?>
                             </div>
-                            <div class="select rounded">
-                                <ul class="options list-group">
-                                    <li class="component list-group-item">
-                                        <input id="first<?php echo $questionNumber; ?>" type="radio" value="1" name="quizOption"> <?php echo $optiona; ?>
-                                    </li>
-                                    <li class="component list-group-item">
-                                        <input id="second<?php echo $questionNumber; ?>" type="radio" value="2" name="quizOption"> <?php echo $optionb; ?>
-                                    </li>
-                                    <li class="component list-group-item">
-                                        <input id="third<?php echo $questionNumber; ?>" type="radio" value="3" name="quizOption"> <?php echo $optionc; ?>
-                                    </li>
-                                    <li class="component list-group-item">
-                                        <input id="fourth<?php echo $questionNumber; ?>" type="radio" value="4" name="quizOption"> <?php echo $optiond; ?>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
 
-                    <?php
-                        $questionNumber++; // Increment the question number
-                    }
-                    ?>
-                    <div class="quiz-functions">
-                        <button class="btn btn-secondary quiz-prev" disabled>&#x2190; Previous</button>
-                        <button class="btn btn-primary btn-3d" type="button" style="display: none;">SUBMIT</button>
-                        <button class="btn btn-secondary quiz-next">&#x2192; Next</button>
-                    </div>
+                            <div class="quiz-list-body" id="question<?php echo $questionNumber; ?>">
+                                <div class="quiz-list alert alert-primary">
+                                    Q. <span><?php echo $question; ?></span>
+                                </div>
+                                <div class="select rounded">
+                                    <ul class="options list-group">
+                                        <li class="component list-group-item">
+                                            <input id="first<?php echo $questionNumber; ?>" type="radio" value="1" name="quizOption<?php echo $questionNumber; ?>"> <?php echo $optiona; ?>
+                                        </li>
+                                        <li class="component list-group-item">
+                                            <input id="second<?php echo $questionNumber; ?>" type="radio" value="2" name="quizOption<?php echo $questionNumber; ?>"> <?php echo $optionb; ?>
+                                        </li>
+                                        <li class="component list-group-item">
+                                            <input id="third<?php echo $questionNumber; ?>" type="radio" value="3" name="quizOption<?php echo $questionNumber; ?>"> <?php echo $optionc; ?>
+                                        </li>
+                                        <li class="component list-group-item">
+                                            <input id="fourth<?php echo $questionNumber; ?>" type="radio" value="4" name="quizOption<?php echo $questionNumber; ?>"> <?php echo $optiond; ?>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        <?php
+                            $questionNumber++;
+                        }
+                        ?>
+                        <div class="quiz-functions">
+                            <button class="btn btn-secondary quiz-prev" type="button" disabled>&#x2190; Previous</button>
+
+                            <button class="btn btn-primary btn-3d" type="submit">SUBMIT</button>
+
+                            <button class="btn btn-secondary quiz-next" type="button">&#x2192; Next</button>
+                        </div>
+                    </form>
                 </div>
-
-
             </div>
-
             <!-- times up timer -->
             <?php
             include 'models/times-up.php'
@@ -186,17 +190,20 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
                     <div class="user-name" style="display: flex; justify-content: center; align-items: center;">
                         RavanjeetKaur
                     </div>
+                    <button id="stopVideoBtn" class="btn btn-danger mt-3">Stop Video</button>
+
                     <div class="quiz-timer badge">
-                        <span class="time"><?php echo date("H:i:s", $timestamp); ?></span>
+                        <span id="quiz-time">
+                        </span>
                     </div>
 
-                    <!-- <button id="stopVideoBtn" class="btn btn-danger">Stop Video</button> -->
                     <hr class="mt-4">
 
                     <?php
-                    $selectResult = mysqli_query($con, "SELECT * FROM sections");
+                    $selectResult = mysqli_query($con, "SELECT * FROM sections  ");
                     $sections = mysqli_fetch_all($selectResult, MYSQLI_ASSOC);
                     ?>
+                    
                     <div class="container d-flex justify-content-center align-items-center">
                         <div class="question-category text-center flex-row">
                             <h3>Sections</h3>
@@ -210,6 +217,7 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
                             </div>
                         </div>
                     </div>
+
                     <hr>
 
                     <div class="container">
@@ -221,15 +229,11 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
                                         Category: DSA
                                     </div>
                                     <div class="card-body text-center" style="padding: 1px;">
-                                        <!-- <div class="digit-box warning">1</div>
-                                        <div class="digit-box warning">2</div>
-                                        <div class="digit-box warning">3</div>
-                                        <div class="digit-box warning">4</div>
-                                        <div class="digit-box warning">5</div>
-                                        <div class="digit-box warning">6</div>
-                                        <div class="digit-box warning">7</div>
-                                        <div class="digit-box warning">8</div>
-                                        <div class="digit-box warning">9</div> -->
+                                        <?php
+                                        for ($i = 1; $i <= $totalQuestions; $i++) {
+                                            echo '<div class="digit-box" data-question="' . $i . '">' . $i . '</div>';
+                                        }
+                                        ?>
                                     </div>
                                     <div class="card-footer d-flex justify-content-between">
                                         <!-- Next and Previous buttons with icons -->
@@ -243,30 +247,80 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
-    <!-- Bootstrap 5 Modal -->
-    <div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p class="alert alert-danger">Warning: Right-click and key press are disabled!</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 
     <?php
     include "jquery.php";
     ?>
+
+    <script>
+        $(document).ready(function() {
+            // Variable to store the count
+            // var warningCount = 0;
+
+            // $(window).on("blur focus", function(e) {
+            //     var prevType = $(this).data("prevType");
+
+            //     if (prevType != e.type ) {
+
+            //         switch (e.type) {
+            //             case "blur":
+            //                 warningCount++;
+
+            //                 if (warningCount >= 4) {
+            //                     $('#disqualificationModal').modal('show');
+            //                 } else {
+            //                     $('#warningModal').modal('show');
+            //                 }
+
+            //                 break;
+            //             case "focus":
+            //                 break;
+            //         }
+
+            //     }
+
+            //     $(this).data("prevType", e.type);
+            // });
+
+            // // Event listener for the exit button
+            // $('#exit').on('click', function() {
+            //     // Hide the modal
+            //     $('#warningModal').modal('hide');
+            // });
+        });
+    </script>
+
+
+
+
+
+    <script>
+        var timeInSeconds = 120 * 60;
+        var countdownInterval = setInterval(function() {
+            var minutes = Math.floor(timeInSeconds / 60);
+            var seconds = timeInSeconds % 60;
+
+            // $("#time").text(minutes + "min " + seconds + "sec");
+            var timestr = minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+
+            document.querySelector('#quiz-time').innerText = timestr;
+
+            if (timeInSeconds < 300) { // Less than 5 minutes
+                $(".quiz-timer").addClass("badge-danger");
+                $(".timer-alert").show();
+            }
+
+            if (timeInSeconds === 0) {
+                clearInterval(countdownInterval);
+                $('#timeUpModal').modal('show');
+            } else {
+                timeInSeconds--;
+            }
+        }, 1000);
+    </script>
 </body>
 
 </html>

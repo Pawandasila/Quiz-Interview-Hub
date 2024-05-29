@@ -6,10 +6,10 @@
                 <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
             </div>
             <div class="modal-body">
-                <p>You have 2 more chances left. If you exit full-screen mode again, you will be disqualified.</p>
+                <p>You have total of 2 more chances left. If you exit full-screen mode again, you will be disqualified.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="retryFullScreen">Retry Full Screen</button>
+                <button type="button" class="btn btn-primary" id="exit">Go back to quiz</button>
             </div>
         </div>
     </div>

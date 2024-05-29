@@ -129,9 +129,7 @@
 
                     <?php
                     //  include "fetching_question/questions.php" 
-                     ?>
-
-
+                    ?>
                     <hr style="margin-bottom: 20px" />
                     <!-- table container -->
                     <div class="section" id="section">
@@ -315,7 +313,9 @@
                 $("#sectionContent .section").each(function() {
                     var sectionName = $(this).find(".section-name").val();
                     var marks = $(this).find(".section-marks").val();
+
                     var questions = [];
+
                     $(this).find("#myTable tbody tr").each(function() {
                         var questionText = $(this).find(".question-text").val();
                         var option1 = $(this).find(".option1").val();
@@ -332,11 +332,15 @@
                             correctAnswer: correctAnswer
                         });
                     });
+                    
                     sections.push({
                         sectionName: sectionName,
                         marks: marks,
                         questions: questions
                     });
+
+                    // sections.lengths
+
                 });
 
                 $.ajax({
