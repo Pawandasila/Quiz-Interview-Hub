@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2024 at 07:14 PM
+-- Generation Time: May 29, 2024 at 07:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,10 +46,9 @@ CREATE TABLE `main_test` (
 --
 
 INSERT INTO `main_test` (`test_id`, `test_name`, `company_name`, `start_date_time`, `end_date_time`, `test_type`, `teacher_id`, `num_of_questions`, `sections`, `total_marks`, `passing_number`) VALUES
-(1, 'English Test', 'Apple limited', '2024-01-10 16:32:54', '2024-01-19 16:32:54', 'Main', 1, 6, '3', 32, 8),
-(13, 'sde ', 'infosis', '2024-02-17 12:24:00', '2024-02-20 12:24:00', 'Main', NULL, NULL, NULL, NULL, NULL),
-(14, 'ff', 'a', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'null', NULL, NULL, NULL, NULL, NULL),
-(15, 's', 's', '2024-02-07 14:25:00', '2024-02-19 14:25:00', 'Mock', NULL, NULL, NULL, NULL, NULL);
+(17, 'dsa', 'amazon', '2024-05-09 07:33:00', '2024-05-21 07:33:00', 'Main', NULL, NULL, NULL, NULL, NULL),
+(18, 'sde2', 'google', '2024-05-28 08:21:00', '2024-05-14 08:21:00', 'Main', NULL, NULL, NULL, NULL, NULL),
+(19, 'hackathon', 'amazon', '2024-05-09 22:20:00', '2024-05-23 22:21:00', 'Main', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -103,7 +102,19 @@ INSERT INTO `questions` (`question_id`, `section_id`, `question_text`, `option1`
 (3, 1, 'What is the capital of France?', 'a) London', 'b) Berlin', 'c) Paris', 'd) Rome', 'c) Paris'),
 (4, 2, 'Question 1 Text', 'Option 1 for Q1', 'Option 2 for Q1', 'Option 3 for Q1', 'Option 4 for Q1', 'Correct Option for Q1'),
 (5, 2, 'Question 2 Text', 'Option 1 for Q2', 'Option 2 for Q2', 'Option 3 for Q2', 'Option 4 for Q2', 'Correct Option for Q2'),
-(6, 2, 'Question 3 Text', 'Option 1 for Q3', 'Option 2 for Q3', 'Option 3 for Q3', 'Option 4 for Q3', 'Correct Option for Q3');
+(6, 2, 'Question 3 Text', 'Option 1 for Q3', 'Option 2 for Q3', 'Option 3 for Q3', 'Option 4 for Q3', 'Correct Option for Q3'),
+(7, 5, 'asbs ', 'a', 'b', 'c', 'd', '1'),
+(8, 5, 'dfaf', 'gg', 'nn', 'jj', 'vv', '1'),
+(9, 6, 'asbs ', 'a', 'b', 'c', 'd', '1'),
+(10, 6, 'dfaf', 'gg', 'nn', 'jj', 'vv', '1'),
+(11, 7, 'asbs ', 'a', 'b', 'c', 'd', '1'),
+(12, 7, 'dfaf', 'gg', 'nn', 'jj', 'vv', '1'),
+(13, 8, 'asbs ', 'a', 'b', 'c', 'd', '1'),
+(14, 8, 'dfaf', 'gg', 'nn', 'jj', 'vv', '1'),
+(15, 9, 'asbs ', 'a', 'b', 'c', 'd', '1'),
+(16, 9, 'dfaf', 'gg', 'nn', 'jj', 'vv', '1'),
+(17, 10, 'asbs ', 'a', 'b', 'c', 'd', '1'),
+(18, 10, 'dfaf', 'gg', 'nn', 'jj', 'vv', '1');
 
 -- --------------------------------------------------------
 
@@ -124,7 +135,13 @@ CREATE TABLE `sections` (
 
 INSERT INTO `sections` (`section_id`, `test_id`, `section_name`, `marks`) VALUES
 (1, 1, 'Vocabulary', 2),
-(2, 1, 'english', 50);
+(2, 1, 'english', 50),
+(5, 17, 'linkList', 0),
+(6, 17, 'oops', 0),
+(7, 18, 'vocabs', 0),
+(8, 18, 'coding round', 0),
+(9, 19, 'coding round', 0),
+(10, 19, 'interview', 0);
 
 -- --------------------------------------------------------
 
@@ -263,7 +280,7 @@ ALTER TABLE `teacher_login`
 -- AUTO_INCREMENT for table `main_test`
 --
 ALTER TABLE `main_test`
-  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `pyq`
@@ -275,13 +292,13 @@ ALTER TABLE `pyq`
 -- AUTO_INCREMENT for table `questions`
 --
 ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `student_login`
