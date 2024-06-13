@@ -8,16 +8,16 @@ $dbname = "quiz";
 $con = mysqli_connect($servername, $username, $password, $dbname);
 ?>
 
-<div class="test_model model-container" id="test_model" style="display: none;">
+<div class="test_model model-container" id="test_model" style="display: block;">
   <div id="contenticon1" class="tab-content" style="display: block;">
 
     <!-- Tabs -->
     <ul class="nav nav-tabs" id="tabsIcon1">
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link active" id="tab1Icon1" href="#contentTab1Icon1">Mock Test</a>
-      </li>
+      </li> -->
       <li class="nav-item">
-        <a class="nav-link" id="tab2Icon1" href="#contentTab2Icon1">Main Tests</a>
+        <a class="nav-link active" id="tab2Icon1" href="#contentTab2Icon1">Main Tests</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="tab3Icon1" href="#contentTab3Icon1">Result</a>
@@ -27,16 +27,16 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
 
     <div class="tab-content">
       <!-- Mock Test Content -->
-      <div class="tab-pane fade show active" id="contentTab1Icon1">
+      <!-- <div class="tab-pane fade show active" id="contentTab1Icon1">
         <div class="row">
-          <!-- First Test Card -->
+          
           <div class="col-md-4 mb-3">
             <div class="card">
               <div class="card-header">
                 <h5 class="card-title">Test Name 1</h5>
               </div>
               <div class="card-body">
-                <!-- Image Wrapper with Fixed Height and Width -->
+                
                 <div style="height: 200px; width: 100%;">
                   <img src="https://source.unsplash.com/800x600/?space" class="card-img-top" alt="Random Space Image" style="height: 100%; width: 100%;">
                 </div>
@@ -50,14 +50,14 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
             </div>
           </div>
 
-          <!-- Second Test Card -->
+          
           <div class="col-md-4 mb-3">
             <div class="card">
               <div class="card-header">
                 <h5 class="card-title">Test Name 2</h5>
               </div>
               <div class="card-body">
-                <!-- Image Wrapper with Fixed Height and Width -->
+                
                 <div style="height: 200px; width: 100%;">
                   <img src="https://source.unsplash.com/random/800x600" class="card-img-top" alt="Random Unsplash Image" style="height: 100%; width: 100%;">
                 </div>
@@ -71,14 +71,14 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
             </div>
           </div>
 
-          <!-- Third Test Card -->
+          
           <div class="col-md-4 col-sm-6 mb-3">
             <div class="card">
               <div class="card-header">
                 <h5 class="card-title">Test Name 3</h5>
               </div>
               <div class="card-body">
-                <!-- Image Wrapper with Fixed Height and Width -->
+                
                 <div style="height: 200px; width: 100%;">
                   <img src="https://source.unsplash.com/800x600/?animals" class="card-img-top" alt="Random Animal Image" style="height: 100%; width: 100%;">
                 </div>
@@ -92,11 +92,11 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
       <!-- Main Tests Content -->
-      <div class="tab-pane fade" id="contentTab2Icon1">
+      <div class="tab-pane fade show active" id="contentTab2Icon1">
         <div class="row">
           <!-- First Test Card -->
           <?php
@@ -106,6 +106,7 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
             $test_name = $row["test_name"];
             $start_date_time = $row["start_date_time"];
             $end_date_time = $row["end_date_time"];
+            $test_id = $row["test_id"];
           ?>
 
             <div class="col-md-4 col-sm-6 mb-3">
@@ -116,13 +117,13 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
                 <div class="card-body">
                   <!-- Image Wrapper with Fixed Height and Width -->
                   <div style="height: 200px; width: 100%;">
-                    <img src="https://source.unsplash.com/800x600/?nature" class="card-img-top" alt="Random Space Image" style="height: 100%; width: 100%;">
+                  <img src="https://th.bing.com/th?id=OIP.WivWzWIIeKJJlBUlJzlyGwHaFd&w=291&h=214&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" class="card-img-top" alt="Random Nature Image" style="height: 100%; width: 100%;">
                   </div>
                   <p class="card-text">Company: <?php echo $company_name ?></p>
                   <p class="card-text">Start Date: <?php echo $start_date_time ?></p>
                   <p class="card-text">End Date: <?php echo $end_date_time ?></p>
                   <div class="card-footer">
-                    <a href="../student/instruction_file.php" class="btn btn-primary">Start Test</a>
+                    <a href="../student/instruction_file.php?test_id=<?php echo $test_id ?>" class="btn btn-primary">Start Test</a>
                   </div>
                 </div>
               </div>
@@ -146,34 +147,45 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
               <h5 class="card-title">Summary</h5>
 
               <!-- Centered Summary Boxes -->
-              <div class="centered-summary-boxes">
+              <div class="row text-center">
                 <!-- Tests Given -->
-                <div class="summary-box given-box">
-                  <i class="fas fa-clipboard-check"></i>
-                  <p class="box-title">Tests Given</p>
-                  <p class="box-value">100</p>
+                <div class="col-6 col-md-3 mb-3">
+                  <div class="summary-box given-box">
+                    <i class="fas fa-clipboard-check"></i>
+                    <p class="box-title">Tests Given</p>
+                    <p class="box-value">100</p>
+                  </div>
                 </div>
 
                 <!-- Tests Passed -->
-                <div class="summary-box passed-box">
-                  <i class="fas fa-check-circle"></i>
-                  <p class="box-title">Tests Passed</p>
-                  <p class="box-value">80</p>
+                <div class="col-6 col-md-3 mb-3">
+                  <div class="summary-box passed-box">
+                    <i class="fas fa-check-circle"></i>
+                    <p class="box-title">Tests Passed</p>
+                    <p class="box-value">80</p>
+                  </div>
                 </div>
 
                 <!-- Tests Not Given but Enrolled -->
-                <div class="summary-box enrolled-box">
-                  <i class="fas fa-hourglass-half"></i>
-                  <p class="box-title">Not Given (Enrolled)</p>
-                  <p class="box-value">20</p>
+                <div class="col-6 col-md-3 mb-3">
+                  <div class="summary-box enrolled-box">
+                    <i class="fas fa-hourglass-half"></i>
+                    <p class="box-title">Not Given (Enrolled)</p>
+                    <p class="box-value">20</p>
+                  </div>
                 </div>
 
                 <!-- Disqualified Tests -->
+
+                <div class="col-6 col-md-3 mb-3">
+
                 <div class="summary-box disqualified-box">
                   <i class="fas fa-times-circle"></i>
                   <p class="box-title">Disqualified Tests</p>
                   <p class="box-value">5</p>
                 </div>
+                </div>
+                
               </div>
 
             </div>
@@ -190,7 +202,9 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
               <div class="row">
                 <!-- Pie Chart -->
                 <div class="col-md-6">
-                  <canvas id="pieChart" style="width: 100%; height: auto; display: block;"></canvas>
+                  <div class="chart-container" style="position: relative; height: 40vh; width: 100%;">
+                    <canvas id="pieChart"></canvas>
+                  </div>
                 </div>
 
                 <!-- Data Table -->

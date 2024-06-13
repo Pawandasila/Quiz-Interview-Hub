@@ -4,10 +4,10 @@ $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "quiz";
-$test_id=$_GET["test_id"];
-$section_id=0;
-$section_name="";
-$sections_data="";
+$test_id = $_GET["test_id"];
+$section_id = 0;
+$section_name = "";
+$sections_data = "";
 
 
 // Create connection
@@ -16,16 +16,11 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
-}
-else
-{
-    $r=mysqli_query($con,"select * from sections where test_id=$test_id");
-    $row=mysqli_fetch_array($r,MYSQLI_ASSOC);
-    $section_id=$row["section_id"];
-    $section_name=$row["section_name"];
-
-    
-    
+} else {
+    $r = mysqli_query($con, "select * from sections where test_id=$test_id");
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    $section_id = $row["section_id"];
+    $section_name = $row["section_name"];
 }
 
 // Process quiz submission
@@ -129,33 +124,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="quiz-container">
                     <form id="quizForm" method="POST" action="">
-                            <div class="quiz-number badge badge-dark" id="ques_tag">
-                                
+                        <div class="quiz-number badge badge-dark" id="ques_tag">
+
+                        </div>
+
+                        <div class="quiz-list-body" id="question1">
+                            <div class="quiz-list alert alert-primary">
+                                Q. <span id="question"></span>
                             </div>
-
-                            <div class="quiz-list-body" id="question1">
-                                <div class="quiz-list alert alert-primary">
-                                    Q. <span id="question"></span>
-                                </div>
-                                <div class="select rounded">
-                                    <ul class="options list-group">
-                                        <li class="component list-group-item" id="first">
-                                            <input id="firstRadio" type="radio" value="1" name="quizOption">
-                                        </li>
-                                        <li class="component list-group-item" id="second">
-                                            <input id="secondRadio" type="radio" value="2" name="quizOption">
-                                        </li>
-                                        <li class="component list-group-item" id="third">
-                                            <input id="thirdRadio" type="radio" value="3" name="quizOption">                                        </li>
-                                        <li class="component list-group-item" id="fourth">
-                                            <input id="fourthRadio" type="radio" value="4" name="quizOption">
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="select rounded">
+                                <ul class="options list-group">
+                                    <li class="component list-group-item" id="first">
+                                        <input id="firstRadio" type="radio" value="1" name="quizOption">
+                                    </li>
+                                    <li class="component list-group-item" id="second">
+                                        <input id="secondRadio" type="radio" value="2" name="quizOption">
+                                    </li>
+                                    <li class="component list-group-item" id="third">
+                                        <input id="thirdRadio" type="radio" value="3" name="quizOption">
+                                    </li>
+                                    <li class="component list-group-item" id="fourth">
+                                        <input id="fourthRadio" type="radio" value="4" name="quizOption">
+                                    </li>
+                                </ul>
                             </div>
+                        </div>
 
 
-                            <div class="quiz-functions">
+                        <div class="quiz-functions">
                             <button class="btn btn-secondary quiz-prev" id="quiz-prev" type="button" disabled>&#x2190; Previous</button>
 
                             <!-- <button class="btn btn-primary btn-3d" type="submit">SUBMIT</button> -->
@@ -201,23 +197,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $selectResult = mysqli_query($con, "SELECT * FROM sections where test_id=$test_id ");
                     $sections = mysqli_fetch_all($selectResult, MYSQLI_ASSOC);
                     ?>
-                    
+
                     <div class="container d-flex justify-content-center align-items-center">
                         <div class="question-category text-center flex-row">
                             <h3>Sections</h3>
                             <div class="dropdown">
                                 <select class="btn btn-info" id="sectionSelect">
                                     <!-- <option value="0">Select Section</option> -->
-                                    <?php 
-                                        $i=0;
-                                        foreach ($sections as $section) : 
-                                        {
-                                            // <?php echo $section['section_id']; ?>
+                                    <?php
+                                    $i = 0;
+                                    foreach ($sections as $section) : {
+                                            // <?php echo $section['section_id']; 
+                                    ?>
                                             ?>
-                                        <option value="<?php echo $i ?>"><?php echo $section['section_name']; ?></option>
-                                        <?php
+                                            <option value="<?php echo $i ?>"><?php echo $section['section_name']; ?></option>
+                                    <?php
                                             $i++;
-                                        }endforeach; ?>
+                                        }
+                                    endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -236,7 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="card-body text-center" style="padding: 1px;" id="category_box">
                                         <?php
                                         // for ($i = 1; $i <= $totalQuestions; $i++) {
-                                            // echo '<div class="digit-box" data-question="' . $i . '">' . $i . '</div>';
+                                        // echo '<div class="digit-box" data-question="' . $i . '">' . $i . '</div>';
                                         // }
                                         ?>
                                     </div>
@@ -296,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             //     $('#warningModal').modal('hide');
             // });
         });
-    </>
+    </script>
 
 
 

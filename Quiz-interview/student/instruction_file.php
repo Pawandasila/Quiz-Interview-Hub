@@ -1,3 +1,7 @@
+<?php
+    $test_id = $_GET['test_id'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -76,7 +80,7 @@
 
     <!-- Start and Quit Buttons -->
     <div class="button-container">
-        <a class="btn btn-primary" href="./quizs_file/index.php" onclick="startTest()">Start Test</a>
+        <a class="btn btn-primary" href="./quizs_file/index.php?test_id=<?php echo $test_id ?>" onclick="startTest()">Start Test</a>
         <a class="btn btn-danger" href="./index.php" onclick="quitTest()">Quit Test</a>
     </div>
 

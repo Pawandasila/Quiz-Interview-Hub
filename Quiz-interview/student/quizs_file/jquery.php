@@ -9,34 +9,7 @@
 <script>
     let times = 0;
 
-    document.getElementById('startTestButton').addEventListener('click', function() {
 
-        function initializeFullScreen() {
-            var elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
-        }
-        initializeFullScreen();
-
-
-        document.querySelector('.start-test-container').style.display = 'none';
-
-        // Show the quiz container
-
-        document.querySelector('.container-fluid').style.display = 'block';
-
-
-
-        showQuestion(currentQuestion);
-        updateNavigationButtons();
-
-
-    });
 
     // right click disabled
     // document.addEventListener('contextmenu', function(event) {
@@ -65,8 +38,9 @@
     });
 </script>
 
+
 <!-- quiz jquery -->
-<script>
+<!-- <script>
     $(document).ready(function() {
         let currentQuestion = 1;
         // const totalQuestions = <?php echo $totalQuestions; ?>; // Adjust this as needed
@@ -165,6 +139,170 @@
         showQuestion(currentQuestion);
         updateNavigationButtons();
     });
+</script> -->
+
+
+<script>
+    $(document).ready(()=>{
+        
+        <?php
+
+            $result=mysqli_query($con,"select * from sections where test_id='$test_id';");
+            $key=array();
+            $mainarray=array();
+            $ques=array();
+            $section_name = array();
+            $ans = array();
+            $org_ans = array();
+            while($row=mysqli_fetch_assoc($result))
+            {
+                array_push($key,"key".$row["section_id"]);
+                array_push($section_name,$row["section_name"]);
+                $value = array();
+                $fx=mysqli_query($con,"select * from questions where section_id=".$row['section_id'].";");
+                $xx=array();
+                $oa=array();
+                while($r=mysqli_fetch_assoc($fx))
+                {
+                    $val = array();
+                    $val["question_id"]=$r["question_id"];
+                    $val["question_text"]=$r["question_text"];
+                    $val["optionA"]=$r["option1"];
+                    $val["optionB"]=$r["option2"];
+                    $val["optionC"]=$r["option3"];
+                    $val["optionD"]=$r["option4"];
+                    $val["correct"]=$r["correct_answer"];
+                    array_push($value,$val);
+                    array_push($xx,0);
+                    array_push($oa,$r["correct_answer"]);
+                    ?>
+                    // alert('<?php echo $val["question_text"] ?>');
+                    <?php
+                }
+                array_push($mainarray,$value);
+                array_push($ans,$xx);
+                array_push($org_ans,$oa);
+                ?>
+                <?php
+            }
+
+            $ques_json = json_encode($mainarray);
+            $sec_json = json_encode($section_name);
+            $ans_json = json_encode($ans);
+            $org_ans_json = json_encode($org_ans);
+        ?>
+        var ques = <?php echo $ques_json; ?>;
+        var sec = <?php echo $sec_json; ?>;
+        var ans = <?php echo $ans_json; ?>;
+        var org_ans = <?php echo $org_ans_json; ?>;
+
+        console.log(ques);
+        console.log(sec);
+        console.log(ans);
+        console.log(org_ans);
+
+        // $("#ques_tag").html("1/"+ques[0].length);
+
+        var ques_no=0;
+        var section_no=0;
+        var total_ques=ques[section_no].length;
+
+        // cat_box(total_ques);
+        $("#category_box").empty();
+        for(var i=0;i<total_ques;i++)
+                $("#category_box").append('<div class="digit-box" data-question="' + i + '" >' + (i+1) + '</div>');
+        $('.digit-box[data-question=0]').addClass('highlight');
+        comp_div(section_no,ques_no,total_ques);
+        $("#category_box_heading").html("Category:"+sec[section_no]);
+        // console.log(ques_no,section_no,total_ques);
+
+        $("#sectionSelect").on('change',function(){
+            // alert($("#sectionSelect").val());
+            section_no=$("#sectionSelect").val();
+            ques_no=0;
+            total_ques=ques[section_no].length;
+            // cat_box(total_ques);
+            $("#category_box").empty();
+            for(var i=0;i<total_ques;i++)
+                $("#category_box").append('<div class="digit-box" data-question="' + i + '" >' + (i+1) + '</div>');
+            $('.digit-box[data-question=0]').addClass('highlight');
+
+            $('.digit-box').click(function() {
+                $('.digit-box').removeClass('highlight'); 
+                $(this).addClass('highlight');
+                q=$(this).data('question');
+                comp_div(section_no,q,total_ques);
+            });
+            
+        
+            comp_div(section_no,ques_no,total_ques);
+            $("#category_box_heading").html("Category:"+sec[section_no]);
+        });
+        
+        function comp_div(s,q,tq)
+        {
+            // console.log(ques_no,section_no,total_ques);
+            $("#ques_tag").html(q+1+"/"+tq);
+            $("#question").html(ques[s][q].question_text);
+            $("#first").empty();
+            $("#first").append("<input id='firstRadio' type='radio' value='1' name='quizOption'>"+ques[s][q].optionA);
+            $("#second").empty();
+            $("#second").append("<input id='secondRadio' type='radio' value='2' name='quizOption'>"+ques[s][q].optionB);
+            $("#third").empty();
+            $("#third").append("<input id='thirdRadio' type='radio' value='3' name='quizOption'>"+ques[s][q].optionC);
+            $("#fourth").empty();
+            $("#fourth").append("<input id='fourthRadio' type='radio' value='4' name='quizOption'>"+ques[s][q].optionD);
+            
+            $('input[name="quizOption"]').on('change',function()
+            {
+                value = $('input[name="quizOption"]:checked').val();
+                ans[s][q]=value;
+            });
+
+            // alert(ques_no+1==total_ques);
+            // alert(ques_no+1==1);
+            $("#quiz-next").prop("disabled",q+1==total_ques);
+            $("#quiz-prev").prop("disabled",q+1==1);
+            ques_no=q;
+            
+        }
+
+
+        $("#quiz-prev").on('click',function(){
+            $('.digit-box[data-question='+ques_no+']').removeClass('highlight');
+            $('.digit-box[data-question='+(ques_no-1)+']').addClass('highlight');
+            ques_no=ques_no-1;
+            comp_div(section_no,ques_no,total_ques);
+            
+        })
+        
+        $("#quiz-next").on('click',function(){
+            $('.digit-box[data-question='+ques_no+']').removeClass('highlight');
+            $('.digit-box[data-question='+(ques_no+1)+']').addClass('highlight');
+            ques_no=ques_no+1;
+            comp_div(section_no,ques_no,total_ques);
+        })
+
+
+        $('.digit-box').click(function() {
+            $('.digit-box').removeClass('highlight'); 
+            $(this).addClass('highlight');
+            q=$(this).data('question');
+            comp_div(section_no,q,total_ques);
+        });
+
+        $('#end_test').on('click',function(){
+            // console.log(org_ans[1]);
+            var final_ans=0;
+            for(var row in org_ans)
+            {
+                for(var col in org_ans[row])
+                if(org_ans[row][col]==ans[row][col])
+                    final_ans++;
+            }
+            console.log(final_ans);
+        })
+    })
 </script>
 
 
@@ -243,74 +381,3 @@
     }
 </script>
 
-
-<!-- select box dropdown menue -->
-<script>
-    function loadQuestions() {
-        var selectedSectionId = $("#sectionSelect").val();
-
-        // Perform an AJAX request to fetch questions for the selected section
-        $.ajax({
-            url: 'fetch_questions.php',
-            type: 'POST',
-            data: {
-                sectionId: selectedSectionId
-            },
-            success: function(response) {
-                var index = response.indexOf('<');
-
-                // Extract the substring before '<' character
-                var numberString = response.substring(0, index);
-
-                // Convert the extracted string to a number
-                var totalQuestions = parseInt(numberString);
-
-                // Output the total questions to console for verification
-                alert("Total Questions: " + totalQuestions);
-
-                // Clear existing question numbers
-                const questionNumbersContainer = $('.row.justify-content-center');
-                questionNumbersContainer.empty();
-
-                // Generate question numbers based on total questions
-                for (let i = 1; i <= totalQuestions; i++) {
-                    const questionNumberDiv = $('<div>', {
-                        class: 'col-3 mb-4 ',
-                        html: `<div class="question-number">${i}</div>`
-                    });
-                    questionNumbersContainer.append(questionNumberDiv);
-                }
-
-                // Update the quiz container with the fetched questions
-                $('.quiz-container').html(response);
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                alert('Error loading questions. Please try again.');
-            }
-        });
-
-        $(document).ready(function() {
-
-            $('#next-btn').click(function() {
-                let g = '';
-                $(".card-body").empty();
-                for (let index = 10; index < 21; index++) {
-                    g += '<div class="digit-box warning">' + index + ' </div>';
-                }
-                $(".card-body").append(
-                    g
-                )
-            });
-
-            $('#previous-btn').click(function() {
-                let g = '';
-                $(".card-body").empty();
-                for (let index = 1; index < 13; index++) {
-                    g += '<div class="digit-box warning">' + index + ' </div>';
-                }
-                $(".card-body").append(g);
-            });
-        });
-    }
-</script>

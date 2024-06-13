@@ -2,7 +2,7 @@
 $server = "localhost";
 $username = "root";
 $password = "";
-$database = "quiz"; 
+$database = "quiz";
 
 session_start();
 // Create a database connection
@@ -81,6 +81,36 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertdata') {
         echo "0"; // Error
     }
     mysqli_close($con);
-    exit(); // Exit the script after processing the request
+    exit();
+}
+?>
+<?php
+if (isset($_POST['action']) && $_POST['action'] == 'handleAction') {
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $id = $_POST['id'];
+        $action = $_POST['action_taken'];
+
+        if ($action == 'accept') {
+            $sql = "UPDATE interview_details SET admin_status = 'Success' WHERE id = $id";
+
+            if ($con->query($sql) === TRUE) {
+                echo "Record updated successfully";
+            } else {
+                echo "Error updating record: " . $con->error;
+            }
+        } elseif ($action == 'reject') {
+            
+            $sql = "DELETE FROM interview_details WHERE id = $id";
+
+            if ($con->query($sql) === TRUE) {
+                echo "Record deleted successfully";
+            } else {
+                echo "Error deleting record: " . $con->error;
+            }
+        }
+    }
+    mysqli_close($con);
+    exit();
 }
 ?>

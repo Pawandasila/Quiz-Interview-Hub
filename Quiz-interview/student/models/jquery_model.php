@@ -1,4 +1,4 @@
-<!-- jQuery -->
+<!-- jQuery  -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Popper.js -->
@@ -38,7 +38,7 @@
     $('.icon-item').click(function(e) {
       e.preventDefault();
       var targetModal = $(this).data('modal-target');
-      $(targetModal).modal('toggle'); // 'toggle' instead of 'show'
+      $(targetModal).modal('toggle'); // 'toggle' instead of ''
     });
 
     // Handle close button click within the modal
@@ -92,6 +92,7 @@
 
 <!-- Chart.js Script for Pie Chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
   $(document).ready(function() {
     // Pie Chart Data
@@ -235,44 +236,54 @@
 
 <script>
   $(document).ready(function() {
-    // Attach the event handler to the change event of the interviewer type dropdown
-    // $('.form-control').hide();
+
     $('#interviewerType').change(function() {
       showDropdown($(this).val());
     });
 
-    function showDropdown(selectedValue) {
-      var dropdown = $('#interviewerDropdown');
-      var interviewerDropdown = $('#interviewerName');
+    function showDropdown(value) {
+      var dropdown = document.getElementById("interviewerNames");
+      dropdown.innerHTML = "";
 
-      if (selectedValue === 'HR' || selectedValue === 'Faculty') {
-        dropdown.show();
-        interviewerDropdown.empty(); // Clear options
+      if (value === "HR") {
+        var hrNames = ["John Doe", "Jane Smith", "Michael Johnson"];
 
-        // Add dummy options based on selected value
-        var dummyNames = selectedValue === 'HR' ? ['HR1', 'HR2', 'HR3'] : ['Teacher1', 'Teacher2', 'Teacher3'];
-
-        $.each(dummyNames, function(index, name) {
-          var option = $('<option>', {
-            value: name,
-            text: name
-          });
-          interviewerDropdown.append(option);
-        });
-
-        // Show the labels and hide the input fields
-        $('.form-label').show();
-        $('.form-control').show();
-
-      } else {
-        dropdown.hide();
-        interviewerDropdown.empty(); // Clear options
-
-        // Hide the labels and show the input fields
-        $('.form-label').hide();
-
+        for (var i = 0; i < hrNames.length; i++) {
+          var option = document.createElement("option");
+          option.text = hrNames[i];
+          option.value = hrNames[i];
+          // alert(option.value);
+          dropdown.add(option);
+        }
+      } else if (value === "Faculty") {
+        var facultyNames = ["Dr. Smith", "Prof. Johnson", "Ms. Brown"];
+        for (var j = 0; j < facultyNames.length; j++) {
+          var option = document.createElement("option");
+          option.text = facultyNames[j];
+          option.value = facultyNames[j];
+          dropdown.add(option);
+        }
       }
     }
+  });
+
+
+  $(document).ready(function() {
+    var companies = <?php echo json_encode($companies_name); ?>;
+    var companiesRole = <?php echo json_encode($companies_role); ?>;
+
+    $('#companyAvailable').change(function() {
+      var selectedCompanyName = $(this).val();
+      var roleSelect = $('#interviewName');
+      roleSelect.empty();
+      roleSelect.append('<option value="" selected disabled>Select a role</option>');
+
+      // Find the index of the selected company
+      var selectedCompanyIndex = companies.indexOf(selectedCompanyName);
+      if (selectedCompanyIndex !== -1) {
+        roleSelect.append(new Option(companiesRole[selectedCompanyIndex], companiesRole[selectedCompanyIndex]));
+      }
+    });
   });
 </script>
 
@@ -325,13 +336,12 @@
   });
 </script>
 
-<!-- to handle the result analysis card -->
 
 <script>
   $(document).ready(function() {
     // Assuming your card title has a class 'test-title'
     $('.test-title').each(function() {
-      var resultCell = $(this).siblings('.result-cell'); // Assuming the result cell has a class 'result-cell'
+      var resultCell = $(this).siblings('.result-cell');
       var result = resultCell.text().trim().toLowerCase();
 
       // Add a class based on the result
@@ -354,61 +364,70 @@
 
 <!-- Payment gateway  -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
 <script>
-  function updateButton() {
-    var status = $('#status').text();
-    var startInterviewBtn = $('#startInterviewBtn');
-    var payButton = $('#rzp-button1');
-
-    console.log(status);
-    // startInterviewBtn.on('click', function(){
-    // })
-    if (status == 'Pending') {
-      console.log('first');
-    }
-
-  }
-
-  // Call the updateButton function on page load
   $(document).ready(function() {
-    updateButton();
-    9
-  });
+    $('.rzp-button').each(function() {
+      $(this).on('click', function(e) {
+        var cardId = $(this).data('id'); 
 
-  var options = {
-    "key": "rzp_test_LAhGZsvKSeGPAe", // Enter the Key ID generated from the Dashboard
-    "amount": "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise.
-    "currency": "INR",
-    "name": "Acme Corp",
-    "description": "Test Transaction",
-    "image": "https://images.pexels.com/photos/1692984/pexels-photo-1692984.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
-    "handler": function(response) {
-      console.log(response);
-    },
-    "prefill": {
-      "name": "Gaurav Kumar",
-      "email": "gaurav.kumar@example.com",
-      "contact": "9000090000"
-    },
-    "notes": {
-      "address": "Razorpay Corporate Office"
-    },
-    "theme": {
-      "color": "#3399cc"
-    }
-  };
-  var rzp1 = new Razorpay(options);
-  rzp1.on('payment.failed', function(response) {
-    alert(response.error.code);
-    alert(response.error.description);
-    alert(response.error.source);
-    alert(response.error.step);
-    alert(response.error.reason);
-    alert(response.error.metadata.order_id);
-    alert(response.error.metadata.payment_id);
+        var additionalData = {
+          name: "Pawan",
+          price: parseInt($('#Price').text().replace('₹', '')),
+          email: "test@razorpay.com",
+          contact: 1231223123
+        };
+
+        $.ajax({
+          type: 'post',
+          url: 'payment_process.php',
+          data: {
+            name: additionalData.name,
+            price: additionalData.price,
+            card_id: cardId 
+          },
+          success: function(result) {
+
+            var options = {
+              "key": "rzp_test_LAhGZsvKSeGPAe",
+              "amount": additionalData.price * 100,
+              "currency": "INR",
+              "name": additionalData.name,
+              "description": "Payment for Interview",
+              "image": "assets/logo.png",
+              "handler": function(response) {
+                $.ajax({
+                  type: 'post',
+                  url: 'payment_process.php',
+                  data: {
+                    payment_id: response.razorpay_payment_id,
+                    card_id: cardId 
+                  },
+                  success: function(result) {
+                    console.log(result);
+                  }
+                });
+              },
+              "prefill": {
+                "name": "pawan",
+                "email": "john@example.com",
+                "contact": "9000090000"
+              },
+              "notes": {
+                "address": "Razorpay Corporate Office"
+              },
+              "theme": {
+                "color": "#3399cc"
+              }
+            };
+            // Razorpay initialization
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+
+          }
+        });
+      });
+    });
   });
-  document.getElementById('rzp-button1').onclick = function(e) {
-    rzp1.open();
-    e.preventDefault();
-  }
 </script>

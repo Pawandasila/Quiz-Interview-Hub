@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 ?>
 
@@ -44,10 +44,8 @@ session_start();
     }
 
     th.text-center {
-        text-align: center;
+      text-align: center;
     }
-
-
   </style>
 </head>
 
@@ -55,16 +53,16 @@ session_start();
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <?php
-     include "navbar.php";
-     ?>
+    include "navbar.php";
+    ?>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:../../partials/_sidebar.html -->
       <?php
-        include "sidebar.php";
-        ?>
+      include "sidebar.php";
+      ?>
       <!-- partial -->
-      <div class="main-panel table-responsive" style=" height: 50%; overflow: scroll;" >
+      <div class="main-panel table-responsive" style=" height: 50%; overflow: scroll;">
         <div class="content-wrapper">
           <div class="page-header">
             <h3 class="page-title"> Food Category </h3>
@@ -72,14 +70,14 @@ session_start();
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                   <div class="input-group">
-                    <input type="text" class="form-control" id = "myInput" placeholder="Search...">
+                    <input type="text" class="form-control" id="myInput" placeholder="Search...">
                     <!-- <div class="input-group-append">
                       <button class="btn btn-outline-secondary" type="button">Search</button>
                     </div> -->
                   </div>
                 </li>
                 <li class="breadcrumb-item">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRowModal" id="addRowButton">Add Category</button>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRowModal" id="addRowButton">Add Category</button>
                 </li>
 
 
@@ -103,31 +101,31 @@ session_start();
                     </thead>
                     <tbody id='category'>
                       <?php
-                          $result=mysqli_query($con,"SELECT * FROM foodcategory"); 
-                          while($row=mysqli_fetch_array($result)){
-                            $foodId = $row['foodId'];
-                            $foodCatergoryName = $row['foodCatergoryName'];
-                          ?>
-                      <tr>
-                        <td>
-                           <?php echo $row['foodId'] ?>
-                        </td>
-                        <td>
-                          <?php echo $row['foodCatergoryName'] ?>
-                        </td>
-                        <td>
+                      $result = mysqli_query($con, "SELECT * FROM foodcategory");
+                      while ($row = mysqli_fetch_array($result)) {
+                        $foodId = $row['foodId'];
+                        $foodCatergoryName = $row['foodCatergoryName'];
+                      ?>
+                        <tr>
+                          <td>
+                            <?php echo $row['foodId'] ?>
+                          </td>
+                          <td>
+                            <?php echo $row['foodCatergoryName'] ?>
+                          </td>
+                          <td>
                             <div class="d-flex justify-content-center">
-                                <button onclick="editThis('<?php echo $foodId ?>', '<?php echo $foodCatergoryName ?>')" class="btn btn-warning edit-link" data-foodid="<?php echo $row['foodId']; ?>"><i class="fas fa-edit"></i> </button>
+                              <button onclick="editThis('<?php echo $foodId ?>', '<?php echo $foodCatergoryName ?>')" class="btn btn-warning edit-link" data-foodid="<?php echo $row['foodId']; ?>"><i class="fas fa-edit"></i> </button>
                             </div>
-                        </td>
+                          </td>
 
-                        <td>
+                          <td>
                             <div class="d-flex justify-content-center">
-                                <button type="button" class="btn btn-danger delete-button" data-foodid="<?php echo $row['foodId']; ?>"><i class="fas fa-trash-alt"></i> </button>
+                              <button type="button" class="btn btn-danger delete-button" data-foodid="<?php echo $row['foodId']; ?>"><i class="fas fa-trash-alt"></i> </button>
                             </div>
-                        </td>
-                          
-                      </tr>
+                          </td>
+
+                        </tr>
                       <?php
                       }
 
@@ -139,10 +137,10 @@ session_start();
               </div>
             </div>
           </div>
-      </div>
+        </div>
 
-       <!-- Edit Modal -->
-       <div class="modal fade" id="editCourseModal" tabindex="-1" aria-labelledby="editCourseModalLabel" aria-hidden="true">
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editCourseModal" tabindex="-1" aria-labelledby="editCourseModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
@@ -175,10 +173,10 @@ session_start();
               </form>
             </div>
           </div>
-      </div>
+        </div>
 
 
-<!-- add new row model -->
+        <!-- add new row model -->
         <div class="modal fade" id="addRowModal" tabindex="-1" aria-labelledby="addRowModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -196,13 +194,13 @@ session_start();
                     <input type="text" class="form-control" id="newCategory" name="newCategory" required>
                   </div>
                   <div class="form-group">
-                    <input type="text" class="form-control" id="shopId"  name="newCategory" hidden required>
+                    <input type="text" class="form-control" id="shopId" name="newCategory" hidden required>
                   </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="addRowFormBtn">Add Row</button>
-                </div>  
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary" id="addRowFormBtn">Add Row</button>
+                </div>
 
               </form>
             </div>
@@ -224,7 +222,7 @@ session_start();
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger" id="confirmDeleteButton" onclick= deleterow()>Delete</button>
+                <button type="submit" class="btn btn-danger" id="confirmDeleteButton" onclick=deleterow()>Delete</button>
               </div>
             </div>
           </div>
@@ -281,8 +279,8 @@ session_start();
   <script src="../../assets/js/misc.js"></script>
   <script src="../../assets/js/file-upload.js"></script>
 
- 
- 
+
+
   <script src="../../assets/js/file-upload.js"></script>
   <script src="assets/js/dashboard.js"></script>
   <!-- Include Chart.js library -->
@@ -291,13 +289,13 @@ session_start();
 
   <!-- js for edit form -->
   <script>
-    function editThis(x,y){
+    function editThis(x, y) {
       $('#editCategory').val(y);
-      $('#foodId').val(x); 
+      $('#foodId').val(x);
     }
-    $(document).ready(function () {
-      
-      $(".edit-link").click(function (e) {
+    $(document).ready(function() {
+
+      $(".edit-link").click(function(e) {
         // e.preventDefault(); 
 
         $("#editCourseModal").modal("show");
@@ -310,112 +308,110 @@ session_start();
       // alert(foodId);
       // alert(editCategory);
       $.ajax({
-                url: 'action.php',
-                type: 'POST',
-                data: 'action=editFoodcategory&category=' + editCategory + '&foodId=' + foodId,
-                success: function (data) {
-                  alert(data);
-                  var td = "<tr><td>" + editCategory + "</td></tr>";
-                  $('#editCategory').update(td);
-                  // alert("helo");
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                  alert('AJAX request failed:', textStatus, errorThrown);
-                }
-        });
+        url: 'action.php',
+        type: 'POST',
+        data: 'action=editFoodcategory&category=' + editCategory + '&foodId=' + foodId,
+        success: function(data) {
+          alert(data);
+          var td = "<tr><td>" + editCategory + "</td></tr>";
+          $('#editCategory').update(td);
+          // alert("helo");
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          alert('AJAX request failed:', textStatus, errorThrown);
+        }
+      });
       $("#editCourseModal").modal("hide");
     }
   </script>
 
   <!-- js for delete form -->
   <script>
-    $(document).ready(function () {
-        $('.delete-button').click(function (){
-            var foodId = $(this).data('foodid');
-            $('#deleteConfirmationModal').data('foodid', foodId);
-            
-            $('#deleteConfirmationModal').modal('show');
-          });
-          
-          $('#confirmDeleteButton').click(function () {
-            // Get the foodId from the data-foodid attribute of the modal
-            var foodId = $('#deleteConfirmationModal').data('foodid');
-            
-            $.ajax({
-                url: 'action.php',
-                type: 'POST',
-                data: 'action=deleteData&foodId=' + foodId,
-                success: function (data) {
-                    alert(data );
-                    location.reload();
-                    hideAddRowModal();
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    alert('AJAX request failed:', textStatus, errorThrown);
-                }
-            });
-            $('#deleteConfirmationModal').modal('hide');
+    $(document).ready(function() {
+      $('.delete-button').click(function() {
+        var foodId = $(this).data('foodid');
+        $('#deleteConfirmationModal').data('foodid', foodId);
+
+        $('#deleteConfirmationModal').modal('show');
+      });
+
+      $('#confirmDeleteButton').click(function() {
+        // Get the foodId from the data-foodid attribute of the modal
+        var foodId = $('#deleteConfirmationModal').data('foodid');
+
+        $.ajax({
+          url: 'action.php',
+          type: 'POST',
+          data: 'action=deleteData&foodId=' + foodId,
+          success: function(data) {
+            alert(data);
+            location.reload();
+            hideAddRowModal();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            alert('AJAX request failed:', textStatus, errorThrown);
+          }
         });
-    });
-</script>
-
-
-<script>
-    $(document).ready(function () {
-  // Function to hide the modal
-  function hideAddRowModal() {
-    $("#addRowModal").modal("hide");
-  }
-
-  $('#addRowFormBtn').on('submit', function (e) {
-    e.preventDefault();
-    alert("hello");
-
-    var category = $('#newCategory').val();
-    var shopId = $('#shopId').val();
-
-    alert(category);
-
-    $.ajax({
-      url: 'action.php',
-      type: 'POST',
-      data: 'action=addCategory&category=' + category,
-      success: function (data) {
-        alert(data);
-        var td = "<tr><td>" + category + "</td></tr>";
-        $('#category').append(td);
-        $('#newCategory').val('');
-
-        // Hide the modal after adding a new row
-        hideAddRowModal();
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        alert('AJAX request failed:', textStatus, errorThrown);
-      }
-    });
-  });
-});
-
-</script>
-
-<script>
-  $(document).ready(function () {
-    $("#myInput").on("keyup", function() {
-      var value = $(this).val().toLowerCase();
-      $("#myTable tbody tr").filter(function() {
-        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        $('#deleteConfirmationModal').modal('hide');
       });
     });
-  });
-
-</script>
+  </script>
 
 
+  <script>
+    $(document).ready(function() {
+      // Function to hide the modal
+      function hideAddRowModal() {
+        $("#addRowModal").modal("hide");
+      }
+
+      $('#addRowFormBtn').on('submit', function(e) {
+        e.preventDefault();
+        alert("hello");
+
+        var category = $('#newCategory').val();
+        var shopId = $('#shopId').val();
+
+        alert(category);
+
+        $.ajax({
+          url: 'action.php',
+          type: 'POST',
+          data: 'action=addCategory&category=' + category,
+          success: function(data) {
+            alert(data);
+            var td = "<tr><td>" + category + "</td></tr>";
+            $('#category').append(td);
+            $('#newCategory').val('');
+
+            // Hide the modal after adding a new row
+            hideAddRowModal();
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            alert('AJAX request failed:', textStatus, errorThrown);
+          }
+        });
+      });
+    });
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tbody tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
 
 
 
 
-  
+
+
+
 
   <!-- End custom js for this page -->
 </body>

@@ -123,6 +123,8 @@ let times = 0;
 
     });
 </script>
+
+
 <script>
     $(document).ready(function() {
         var video = document.getElementById('webcamVideo');
@@ -142,6 +144,7 @@ let times = 0;
     $(document).ready(()=>{
         
         <?php
+
             $result=mysqli_query($con,"select * from sections where test_id='$test_id';");
             $key=array();
             $mainarray=array();
@@ -190,12 +193,14 @@ let times = 0;
         var sec = <?php echo $sec_json; ?>;
         var ans = <?php echo $ans_json; ?>;
         var org_ans = <?php echo $org_ans_json; ?>;
+
         console.log(ques);
         console.log(sec);
         console.log(ans);
         console.log(org_ans);
 
         // $("#ques_tag").html("1/"+ques[0].length);
+
         var ques_no=0;
         var section_no=0;
         var total_ques=ques[section_no].length;
@@ -231,6 +236,7 @@ let times = 0;
             comp_div(section_no,ques_no,total_ques);
             $("#category_box_heading").html("Category:"+sec[section_no]);
         });
+        
         function comp_div(s,q,tq)
         {
             // console.log(ques_no,section_no,total_ques);
@@ -258,7 +264,6 @@ let times = 0;
             ques_no=q;
             
         }
-
 
 
         $("#quiz-prev").on('click',function(){
@@ -296,8 +301,6 @@ let times = 0;
             console.log(final_ans);
         })
     })
-
-
 </script>
 
 

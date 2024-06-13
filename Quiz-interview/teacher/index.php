@@ -41,15 +41,16 @@
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <?php
-      include "navbar.php";
-      ?>
+    include "navbar.php";
+    ?>
 
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_sidebar.html -->
       <?php
-          include "sidebar.php"
-        ?>
+      include "sidebar.php"
+      ?>
+      
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
@@ -72,8 +73,7 @@
               <div class="card bg-gradient-danger card-img-holder text-white">
                 <div class="card-body">
                   <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                  <h4 class="font-weight-normal mb-3">Weekly Sales <i
-                      class="mdi mdi-chart-line mdi-24px float-right"></i>
+                  <h4 class="font-weight-normal mb-3">Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-right"></i>
                   </h4>
                   <h2 class="mb-5">$ 15,0000</h2>
                   <h6 class="card-text">Increased by 60%</h6>
@@ -84,8 +84,7 @@
               <div class="card bg-gradient-info card-img-holder text-white">
                 <div class="card-body">
                   <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                  <h4 class="font-weight-normal mb-3">Weekly Orders <i
-                      class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                  <h4 class="font-weight-normal mb-3">Weekly Orders <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
                   </h4>
                   <h2 class="mb-5">45,6334</h2>
                   <h6 class="card-text">Decreased by 10%</h6>
@@ -96,8 +95,7 @@
               <div class="card bg-gradient-success card-img-holder text-white">
                 <div class="card-body">
                   <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                  <h4 class="font-weight-normal mb-3">Visitors Online <i
-                      class="mdi mdi-diamond mdi-24px float-right"></i>
+                  <h4 class="font-weight-normal mb-3">Visitors Online <i class="mdi mdi-diamond mdi-24px float-right"></i>
                   </h4>
                   <h2 class="mb-5">95,5741</h2>
                   <h6 class="card-text">Increased by 5%</h6>
@@ -111,8 +109,7 @@
                 <div class="card-body">
                   <div class="clearfix">
                     <h4 class="card-title float-left">Visit And Sales Statistics</h4>
-                    <div id="visit-sale-chart-legend"
-                      class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                    <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
                   </div>
                   <canvas id="visit-sale-chart" class="mt-4"></canvas>
                 </div>
@@ -163,11 +160,11 @@
 
   <script>
     // Update the pending requests count when the page loads
-    $(document).ready(function () {
+    $(document).ready(function() {
       updatePendingRequestsCount();
 
       // Attach a click event to the notification icon
-      $(".notification-icon").click(function () {
+      $(".notification-icon").click(function() {
         toggleNotificationCount();
       });
     });

@@ -10,9 +10,9 @@
             <img src="./images/client.jpg" alt="user picture" height="120px" class="img-fluid">
           </div>
           <div class="user-detail">
-            <h4><i style="color: black;" class="fas fa-user"></i> Ravanjeet kaur</h4>
-            <p><i style="color: black;" class="far fa-envelope"></i> Ravan.doe@example.com</p>
-            <p><i style="color: black;" class="fas fa-phone"></i> +1 123-456-7890</p>
+            <h4><i style="color: black;" class="fas fa-user"></i> Pawan Dasila</h4>
+            <p><i style="color: black;" class="far fa-envelope"></i> pawan.dasila@example.com</p>
+            <p><i style="color: black;" class="fas fa-phone"></i> +91 123-456-7890</p>
             <p><i style="color: black;" class="fas fa-map-marker-alt"></i> 123 Main St, Cityville</p>
           </div>
         </div>
@@ -26,23 +26,23 @@
             <tbody>
               <tr>
                 <td>Date of Birth</td>
-                <td>January 1, 1990</td>
+                <td>December 6, 2004</td>
               </tr>
               <tr>
                 <td>College</td>
-                <td>City College</td>
+                <td>Gehu</td>
               </tr>
               <tr>
                 <td>Course</td>
-                <td>Bachelor of Science</td>
+                <td>Btech</td>
               </tr>
               <tr>
                 <td>Year</td>
-                <td>2023</td>
+                <td>2022</td>
               </tr>
               <tr>
                 <td>Semester</td>
-                <td>2</td>
+                <td>4</td>
               </tr>
               <tr>
                 <td>Branch</td>

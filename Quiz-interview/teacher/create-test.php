@@ -133,7 +133,9 @@
                     <hr style="margin-bottom: 20px" />
                     <!-- table container -->
                     <div class="section" id="section">
-                        <div id="sectionContent"></div>
+                        <div id="sectionContent">
+
+                        </div>
                         <div class="button">
                             <button type="submit" id="SumbitForm" class="btn btn-info btn-hover">Done</button>
                         </div>
@@ -237,21 +239,26 @@
         // Function to handle events within a section
         function handleSectionEvents($section) {
             $section.find(".add-row-button").on("click", function() {
+
                 var lastRowNumber = parseInt($section.find("#myTable tbody tr:last td:first input").val()) || 0;
                 var newRowNumber = lastRowNumber + 1;
                 var newRow = $section.find("#myTable tbody tr:first").clone();
                 newRow.find("td:first input").val(newRowNumber);
                 newRow.find(".editable-cell input").val("");
                 $section.find("#myTable tbody").append(newRow);
+
             });
+
 
             $section.find('.delete-button').on("click", function() {
                 $(this).closest('tr').remove();
             });
 
             $section.find("#data").on("change", function() {
+
                 let selectedFile = this.files[0];
                 if (selectedFile) {
+                    
                     let fileReader = new FileReader();
                     fileReader.onload = function(e) {
                         let fileContent = e.target.result;

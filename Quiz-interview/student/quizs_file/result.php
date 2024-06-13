@@ -1,23 +1,4 @@
-<?php
 
-    session_start();
-
-    // Check if the user has completed the quiz
-    // if (!isset($_SESSION['quiz_completed']) || $_SESSION['quiz_completed'] !== true) {
-    //     header('Location: student/index.php'); 
-    //     exit();
-    // }
-
-
-?>
-
-<?php
-
-$var = $_GET['id'];
-
-// echo "<script> alert('". $var ."') </script>";
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -189,6 +170,7 @@ $var = $_GET['id'];
                                     <div class="row row-cols-1 row-cols-md-3 ">
 
                                     <?php 
+                                    $var = 123;
                                     if($var == 123 ){
                                     ?>
                                         <div class="col">
@@ -239,15 +221,7 @@ $var = $_GET['id'];
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Custom JavaScript for functionality -->
 
-    <script>
-        // Clear the browser history state to prevent back navigation to the quiz page
-        history.replaceState(null, '', 'result.php');
 
-        // Redirect to home page if the user tries to go back
-        window.addEventListener('popstate', function(event) {
-            window.location.href = 'index.php'; // Replace 'index.php' with your home page URL
-        });
-    </script>
 </body>
 
 </html>
