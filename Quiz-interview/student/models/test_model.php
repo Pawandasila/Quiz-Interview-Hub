@@ -26,7 +26,7 @@ $con = mysqli_connect($servername, $username, $password, $dbname);
     <hr>
 
     <div class="tab-content">
-      <!-- Mock Test Content -->
+     
       <!-- <div class="tab-pane fade show active" id="contentTab1Icon1">
         <div class="row">
           

@@ -1,15 +1,14 @@
 <!-- jQuery  -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Popper.js -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-<!-- Bootstrap 5 CSS and JS -->
-<!-- Bootstrap 5 JavaScript and Popper.js -->
+
 <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Dropdown Toggle Script -->
+
 <script>
   document.querySelectorAll('.dropdown-toggle').forEach(item => {
     item.addEventListener('click', event => {
@@ -22,7 +21,7 @@
   });
 </script>
 
-<!-- Tab Switching Script -->
+
 <script>
   $(document).ready(function() {
     $('#tabsIcon1 a').on('click', function(e) {
@@ -32,70 +31,68 @@
   });
 </script>
 
-<!-- Modal Toggle Script -->
+
 <script>
   $(document).ready(function() {
     $('.icon-item').click(function(e) {
       e.preventDefault();
       var targetModal = $(this).data('modal-target');
-      $(targetModal).modal('toggle'); // 'toggle' instead of ''
+      $(targetModal).modal('toggle'); 
     });
 
-    // Handle close button click within the modal
+    
     $('.modal').on('hidden.bs.modal', function() {
-      // Optional: reset form fields on modal close
+      
       $(this).find('form')[0].reset();
     });
   });
 </script>
 
-<!-- Tabs Display Script -->
+
 <script>
   function showTabs(iconId) {
-    // Hide all content blocks initially
+    
     $('.model-container').hide();
 
-    // Show the corresponding model based on the clicked icon
     if (iconId == 'icon1') {
       $('#test_model').show();
-      // Optionally, set default active tab
+      
       $('#tab1Icon1').addClass('active');
     } else if (iconId == 'icon2') {
       $('#interview_model').show();
-      // Optionally, set default active tab
+      
       $('#tab1Icon2').addClass('active');
     } else if (iconId == 'icon3') {
       $('#pyq_model').show();
-      // Optionally, set default active tab
+      
       $('#tab1Icon3').addClass('active');
     } else if (iconId == 'icon4') {
       $('#study_material').show();
       $('#tab1Icon4').addClass('active');
     } else {
-      // Hide all models when no specific icon is clicked
+      
       $('.model-container').hide();
     }
   }
 
-  // Redirect to GeeksforGeeks
+  
   function redirectToGFG(topic) {
     const topicURLs = {
       'dsa': 'https://www.geeksforgeeks.org/data-structures/',
       'cpp': 'https://www.geeksforgeeks.org/c-plus-plus/',
       'java': 'https://www.geeksforgeeks.org/java/'
-      // Add more URLs as needed
+      
     };
 
     window.location.href = topicURLs[topic];
   }
 </script>
 
-<!-- Chart.js Script for Pie Chart -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
   $(document).ready(function() {
-    // Pie Chart Data
+    
     var data = {
       labels: ["Test 1", "Test 2", "Test 3", "Test 4", "Test 5"],
       datasets: [{
@@ -105,10 +102,10 @@
       }]
     };
 
-    // Get the context of the canvas element
+    
     var ctx = $("#pieChart")[0].getContext("2d");
 
-    // Create the pie chart
+
     var myPieChart = new Chart(ctx, {
       type: 'pie',
       data: data
@@ -116,11 +113,11 @@
   });
 </script>
 
-<!-- Test Results Display Script -->
+
 <script>
   function showTestResults() {
     var selectedTest = $("#testDropdown").val();
-    // Simulated data for the test results
+    
     var testResultsData = {
       select: {
         result: "",
@@ -141,9 +138,9 @@
             grade: "A",
             points: 3.7
           },
-          // Add more subjects as needed
+          
         ],
-        percentage: "92%", // Assuming the percentage based on marks
+        percentage: "92%", 
       },
       test2: {
         result: "Fail",
@@ -159,9 +156,9 @@
             grade: "B-",
             points: 2.7
           },
-          // Add more subjects as needed
+        
         ],
-        percentage: "68%", // Assuming the percentage based on marks
+        percentage: "68%", 
       },
       test3: {
         result: "Pass",
@@ -177,24 +174,24 @@
             grade: "A-",
             points: 3.5
           },
-          // Add more subjects as needed
+          
         ],
-        percentage: "84%", // Assuming the percentage based on marks
+        percentage: "84%",
       },
     };
 
-    // Display the test results in the container
+    
     var resultsContainer = $("#testResultsContainer");
     resultsContainer.empty();
 
     if (selectedTest in testResultsData) {
       var testResult = testResultsData[selectedTest];
 
-      // Display test name and result
+      
       resultsContainer.append(`<p><strong>Name of Test:</strong> ${selectedTest}</p>`);
       resultsContainer.append(`<p><strong>Result of the Test:</strong> ${testResult.result}</p>`);
 
-      // Display subjects, marks, grade, and points in a clean table without lines
+
       var table = $("<table class='table table-borderless table-hover table-striped'>").append(`
     <thead>
       <tr>
@@ -224,7 +221,7 @@
 
       resultsContainer.append(table);
 
-      // Display percentage
+      
       resultsContainer.append(`<p><strong>Percentage:</strong> ${testResult.percentage}</p>`);
     }
   }
@@ -232,7 +229,7 @@
 
 
 
-<!-- interview dropdown script -->
+
 
 <script>
   $(document).ready(function() {
@@ -278,7 +275,7 @@
       roleSelect.empty();
       roleSelect.append('<option value="" selected disabled>Select a role</option>');
 
-      // Find the index of the selected company
+
       var selectedCompanyIndex = companies.indexOf(selectedCompanyName);
       if (selectedCompanyIndex !== -1) {
         roleSelect.append(new Option(companiesRole[selectedCompanyIndex], companiesRole[selectedCompanyIndex]));
@@ -339,19 +336,17 @@
 
 <script>
   $(document).ready(function() {
-    // Assuming your card title has a class 'test-title'
+    
     $('.test-title').each(function() {
       var resultCell = $(this).siblings('.result-cell');
       var result = resultCell.text().trim().toLowerCase();
 
-      // Add a class based on the result
       if (result === 'pass') {
         resultCell.addClass('success');
       } else {
         resultCell.addClass('fail');
       }
 
-      // Append an icon after the card title
       if (result === 'pass') {
         $(this).append('<i class="fas fa-check-circle text-success"></i>');
       } else {
@@ -362,7 +357,6 @@
 </script>
 
 
-<!-- Payment gateway  -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
@@ -370,8 +364,7 @@
   $(document).ready(function() {
     $('.rzp-button').each(function() {
       $(this).on('click', function(e) {
-        var cardId = $(this).data('id'); 
-
+        var cardId = $(this).data('id');
         var additionalData = {
           name: "Pawan",
           price: parseInt($('#Price').text().replace('₹', '')),
@@ -385,10 +378,9 @@
           data: {
             name: additionalData.name,
             price: additionalData.price,
-            card_id: cardId 
+            card_id: cardId
           },
           success: function(result) {
-
             var options = {
               "key": "rzp_test_LAhGZsvKSeGPAe",
               "amount": additionalData.price * 100,
@@ -402,17 +394,18 @@
                   url: 'payment_process.php',
                   data: {
                     payment_id: response.razorpay_payment_id,
-                    card_id: cardId 
+                    card_id: cardId
                   },
                   success: function(result) {
                     console.log(result);
+                    location.reload(); 
                   }
                 });
               },
               "prefill": {
-                "name": "pawan",
-                "email": "john@example.com",
-                "contact": "9000090000"
+                "name": "Pawan",
+                "email": "test@razorpay.com",
+                "contact": "1231223123"
               },
               "notes": {
                 "address": "Razorpay Corporate Office"
@@ -421,10 +414,8 @@
                 "color": "#3399cc"
               }
             };
-            // Razorpay initialization
             var rzp1 = new Razorpay(options);
             rzp1.open();
-
           }
         });
       });

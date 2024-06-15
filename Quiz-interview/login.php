@@ -49,7 +49,7 @@
                             <h4 class="mb-4 pb-3 mt-4">Sign Up</h4>
                             <div class="form-group row">
                                 <div class="input-container">
-                                    <input type="text" name="firstname" class="form-style" placeholder="Your Name" id="logname" autocomplete="none" required>
+                                    <input type="text" name="firstname"  class="form-style" placeholder="Your Name" id="logname" autocomplete="none" required>
                                     <i class="input-icon fa fa-user"></i>
                                     <div class="error-message" id="nameError"></div>
                                 </div>
@@ -144,6 +144,8 @@
         const photo = document.getElementById('photo');
         const captureButton = document.getElementById('capture-btn');
         const imageInput = document.getElementById('image');
+        var name = $('#logname').val();
+        alert(name);
 
         // Access webcam
         navigator.mediaDevices.getUserMedia({ video: true })
@@ -157,6 +159,8 @@
         // Capture image
         captureButton.addEventListener('click', function() {
             const context = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const dataURL = canvas.toDataURL('image/png');
             photo.src = dataURL;
@@ -170,7 +174,7 @@
                 url: 'upload.php',
                 data: { image: dataURL },
                 success: function(response) {
-                    console.log(response);
+                    alert(response);
                 },
                 error: function(xhr, status, error) {
                     console.error('Error uploading image: ', error);
