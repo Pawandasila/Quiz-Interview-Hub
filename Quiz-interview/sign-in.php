@@ -27,14 +27,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
 
-        // Verify password
         if (password_verify($password, $user['password'])) {
             $_SESSION['username'] = $user['username'];
-            header("Location: student/index.php"); // Redirect to the welcome page
+            $_SESSION['userid'] = $user['id'];
+            header("Location: student/index.php"); 
             exit();
         } else {
-            echo "Invalid password.";
+            echo "<script>alert('Invalid password.')</script>";
         }
+        
     } else {
         echo "No user found with that username.";
     }

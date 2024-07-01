@@ -84,18 +84,21 @@ if (isset($_POST['action']) && $_POST['action'] == 'insertdata') {
     exit();
 }
 ?>
+
+
 <?php
 if (isset($_POST['action']) && $_POST['action'] == 'handleAction') {
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id = $_POST['id'];
         $action = $_POST['action_taken'];
+        $meeting_link = $_POST['meeting_link'];
 
         if ($action == 'accept') {
-            $sql = "UPDATE interview_details SET admin_status = 'Success' WHERE id = $id";
+            $sql = "UPDATE interview_details SET admin_status = 'Done', meeting_link = '$meeting_link' WHERE id = $id";
 
             if ($con->query($sql) === TRUE) {
-                echo "Record updated successfully";
+                echo "success";
             } else {
                 echo "Error updating record: " . $con->error;
             }

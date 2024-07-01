@@ -31,16 +31,17 @@ function isPaymentSuccessful($adminStatus)
 // Get the meeting date
 function getMeetingDate($dateAndTime)
 {
-    
+
     return $dateAndTime;
 }
 
 // Format the meeting date for display
 function formatMeetingDate($meetingDate)
 {
-    
+
     return $meetingDate;
 }
+
 
 ?>
 
@@ -69,7 +70,7 @@ function formatMeetingDate($meetingDate)
         <hr>
 
         <div class="tab-content">
-            <!-- Scheduled Interview Content -->
+
             <div class="tab-pane fade show active" id="contentTab1Icon2">
                 <div class="row">
                     <!-- First Test Card -->
@@ -78,8 +79,17 @@ function formatMeetingDate($meetingDate)
                     $result = $con->query($sql);
 
                     if ($result->num_rows > 0) {
-                        // Output data of each row
+
                         while ($row = $result->fetch_assoc()) {
+                            if (empty($row['meeting_link'])) {
+
+                                $meeting_link_status = "disabled";
+                                $meeting_link_href = "#";
+                            } else {
+
+                                $meeting_link_status = "";
+                                $meeting_link_href = $row['meeting_link'];
+                            }
                             $meetingDate = getMeetingDate($row['date_and_time']);
                             $formattedMeetingDate = formatMeetingDate($meetingDate);
                     ?>
@@ -90,28 +100,30 @@ function formatMeetingDate($meetingDate)
                                     </div>
                                     <div class="card-body text-center">
                                         <p style="font-weight: bold;">Company Name: <span id="companyName" style="color:#ff0080"><?php echo $row["company_name"]; ?></span></p>
-                                        
+
                                         <p style="font-weight: bold; ">Position: <span id="interviewerName" style="color:#ff0080"><?php echo $row["interview_name"]; ?></span></p>
 
                                         <p class="card-text" style="font-weight: bold;">Interview Date: <span style="color: #ff0080;"><?php echo $formattedMeetingDate; ?></span></p>
                                         <p class="card-text" style="font-weight: bold;">Payment Status: <span style="color: #ff0080;"><?php echo $row['payment_status']; ?></span></p>
                                         <p class="card-text" style="font-weight: bold;">Admin Status: <span style="color: #ff0080;"><?php echo $row['admin_status']; ?></span></p>
-                                        
+
                                         <?php if ($row['admin_status'] === 'pending') : ?>
 
                                             <p class="card-text">Price: <span id="Price">₹999</span></p>
                                             <button class="rzp-button btn btn-primary mt-3" data-id="<?php echo $row['id']; ?>" disabled>Pending</button>
 
-                                        <?php elseif ($row['admin_status'] === 'Done') : ?>
-
-                                            <p class="card-text">Price: <span id="Price">₹999</span></p>
-                                            <a href="#" class="btn btn-primary mt-3">Meeting Link</a>
-
-                                        <?php else : ?>
+                                        <?php elseif ($row['admin_status'] === 'Done' && $row['payment_status'] === "pending") : ?>
 
                                             <p class="card-text">Price: <span id="Price">₹999</span></p>
                                             <button class="rzp-button btn btn-primary mt-3 custom-btn" data-id="<?php echo $row['id']; ?>">Pay Now</button>
-                                            
+
+                                        <?php elseif ($row['admin_status'] === 'Done' && $row['payment_status'] === "success") : ?>
+
+
+                                            <p class="card-text">Price: <span id="Price">₹999</span></p>
+                                            <button type="button" class="btn btn-info" <?php echo $meeting_link_status; ?> onclick="window.location.href='<?php echo $meeting_link_href; ?>'">
+                                                Meeting Link
+                                            </button>
                                         <?php endif; ?>
                                     </div>
                                 </div>
@@ -147,7 +159,7 @@ function formatMeetingDate($meetingDate)
                                 </select>
                             </div>
 
-                            <!-- Other Fields -->
+                         
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
                                 <input type="text" class="form-control" value="Pawan Dasila" id="name" readonly>
@@ -181,7 +193,7 @@ function formatMeetingDate($meetingDate)
                                     <option value="" selected disabled>Select a company first</option>
                                 </select>
                             </div>
-                                    
+
                             <div class="mb-3">
                                 <label for="interviewDateTime" class="form-label">Date and Time of Interview</label>
                                 <input type="datetime-local" class="form-control" id="interviewDateTime">

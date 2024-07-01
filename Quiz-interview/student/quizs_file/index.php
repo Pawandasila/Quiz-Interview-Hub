@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div class="container">
                         <div class="row">
-                            <!-- Single card with increased height and width -->
+            
                             <div class="col-md-12">
                                 <div class="card" id="category_card">
                                     <div class="card-header" id="category_box_heading">
@@ -221,7 +221,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <div class="card-footer d-flex justify-content-between">
 
                                         <button class="btn btn-info" id="previous-btn">&#x2190; </button>
-                                        <a class="btn btn-info" id="end_test" href="./result.php?test_id=<?php $test_id ?>">End Test</a>
+                                        <!-- <a class="btn btn-info" id="end_test" href="./result.php?test_id=<?php $test_id ?>">End Test</a> -->
+                                        <a class="btn btn-info" id="end_test" href="#">End Test</a>
                                         <button class="btn btn-info" id="next-btn"> &#x2192; </button>
 
                                     </div>
@@ -239,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include "jquery.php";
     ?>
 
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             // Variable to store the count
             var warningCount = 0;
@@ -269,13 +270,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $(this).data("prevType", e.type);
             });
 
-            // Event listener for the exit button
+            
             $('#exit').on('click', function() {
-                // Hide the modal
+            
                 $('#warningModal').modal('hide');
             });
         });
-    </script>
+    </script> -->
 
 
 
@@ -292,7 +293,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             document.querySelector('#quiz-time').innerText = timestr;
 
-            if (timeInSeconds < 300) { // Less than 5 minutes
+            if (timeInSeconds < 300) { 
                 $(".quiz-timer").addClass("badge-danger");
                 $(".timer-alert").show();
             }

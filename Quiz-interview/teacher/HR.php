@@ -6,22 +6,13 @@ session_start();
 <html lang="en">
 
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Purple Admin</title>
-  <!-- plugins:css -->
+  <title>Backend Panel</title>
   <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <!-- endinject -->
-  <!-- Layout styles -->
   <link rel="stylesheet" href="assets/css/style.css">
-  <!-- End layout styles -->
   <link rel="shortcut icon" href="assets/images/favicon.ico" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <style>
@@ -51,13 +42,13 @@ session_start();
 
 <body>
   <div class="container-scroller">
-    <!-- partial:../../partials/_navbar.html -->
+
     <?php include "navbar.php"; ?>
-    <!-- partial -->
+
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:../../partials/_sidebar.html -->
+
       <?php include "sidebar.php"; ?>
-      <!-- partial -->
+
       <div class="main-panel table-responsive" style=" height: 50%; overflow: scroll;">
         <div class="content-wrapper">
           <div class="page-header">
@@ -82,11 +73,21 @@ session_start();
                     </thead>
                     <tbody>
                       <?php
-                      $sql = "SELECT * FROM interview_details where admin_status = 'Success' ";
+                      $sql = "SELECT * FROM interview_details where admin_status = 'Done' ";
                       $result = $con->query($sql);
 
                       if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
+
+                          if (empty($row['meeting_link'])) {
+
+                            $meeting_link_status = "disabled";
+                            $meeting_link_href = "#";
+                          } else {
+
+                            $meeting_link_status = "";
+                            $meeting_link_href = $row['meeting_link'];
+                          }
                       ?>
                           <tr>
                             <th scope="row">1</th>
@@ -94,7 +95,9 @@ session_start();
                             <td><?php echo $row['date_and_time'] ?></td>
                             <td><?php echo $row['interview_name'] ?></td>
                             <td>John Doe</td>
-                            <td><a href="#" class="btn btn-info">Meeting Link</a></td>
+                            <td><button type="button" class="btn btn-info" <?php echo $meeting_link_status; ?> onclick="window.location.href='<?php echo $meeting_link_href; ?>'">
+                                Meeting Link
+                              </button></td>
                           </tr>
                       <?php
                         }
@@ -107,21 +110,18 @@ session_start();
             </div>
           </div>
         </div>
-        <!-- content-wrapper ends -->
-        <!-- partial:../../partials/_footer.html -->
+
+
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
             <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © to the Team</span>
           </div>
         </footer>
-        <!-- partial -->
+
       </div>
-      <!-- main-panel ends -->
+
     </div>
-    <!-- page-body-wrapper ends -->
   </div>
-  <!-- container-scroller -->
-  <!-- plugins:js -->
   <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
   <script src="assets/js/jquery.cookie.js" type="text/javascript"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -140,8 +140,6 @@ session_start();
   <script src="assets/js/todolist.js"></script>
   <script src="../../assets/js/file-upload.js"></script>
   <script src="assets/js/dashboard.js"></script>
-  <!-- Include Chart.js library -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script> -->
 
   <script>
     $(document).ready(function() {
@@ -153,7 +151,6 @@ session_start();
       });
     });
   </script>
-  <!-- End custom js for this page -->
 </body>
 
 </html>

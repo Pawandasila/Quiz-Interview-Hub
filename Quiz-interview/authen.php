@@ -15,7 +15,7 @@
 <body>
     <div class="section">
         <div class="container">
-            <form id="signin" method="post" action="login">
+            <form id="signin" method="post" action="sign-in.php">
                 <div class="row full-height justify-content-center">
                     <div class="col-12 text-center align-self-center py-5">
                         <div class="section pb-5 pt-5 pt-sm-2 text-center">
@@ -36,9 +36,6 @@
                                                     <input type="password" name="password" class="form-style" placeholder="Your Password" id="password" autocomplete="none">
                                                     <i class="input-icon fa fa-lock"></i>
                                                 </div>
-                                                <button type="button" class="btn mt-4" data-bs-toggle="modal" data-bs-target="#captureModal">Capture Photo</button>
-                                                <img id="loginPhoto" src="#" alt="Your photo" style="display:none;">
-                                                <input type="hidden" id="loginImage" name="loginImage">
                                                 <button type="submit" name="login" class="btn mt-4">Login</button>
                                                 <p class="mb-0 mt-4 text-center">
                                                     <a href="#0" class="link">Forgot your password?</a>
@@ -89,24 +86,24 @@
                                     <i class="input-icon fa fa-calendar"></i>
                                 </div>
                                 <div class="input-container">
+                                    <input type="number" name="phoneNum" class="form-style" placeholder="Your Phone Number" id="phoneNum" autocomplete="none" required>
+                                    <div class="error-message" id="phoneNumError"></div>
+                                    <i class="input-icon fa fa-phone"></i>
+                                </div>
+
+                            </div>
+                            <div class="form-group row">
+                                <div class="input-container">
                                     <input type="password" name="logpass" class="form-style" placeholder="Your Password" id="logpass" autocomplete="none" required>
                                     <div class="error-message" id="logpassError"></div>
                                     <i class="input-icon fa fa-lock"></i>
                                 </div>
-                            </div>
-                            <div class="form-group row">
                                 <div class="input-container">
                                     <input type="password" name="logrepass" class="form-style" placeholder="Re-Password" id="logrepass" autocomplete="none" required>
                                     <div class="error-message" id="logrepassError"></div>
                                     <i class="input-icon fa fa-lock"></i>
                                 </div>
-                                <div class="input-container">
-                                    <!-- Add another input field here if needed -->
-                                </div>
                             </div>
-                            <button type="button" class="btn mt-4" data-bs-toggle="modal" data-bs-target="#captureModal">Capture Photo</button>
-                            <img id="photo" src="#" alt="Your photo" style="display:none;">
-                            <input type="hidden" id="image" name="image">
                             <button type="submit" name="Signup" class="btn mt-4">Signup</button>
                         </div>
                     </div>
@@ -121,64 +118,8 @@
     </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="captureModal" tabindex="-1" aria-labelledby="captureModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="captureModalLabel">Capture Photo</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="video-container">
-                        <video id="video" width="100%" autoplay></video>
-                    </div>
-                    <canvas id="canvas" style="display:none;"></canvas>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="capture-btn">Capture</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <script>
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-        const photo = document.getElementById('photo');
-        const loginPhoto = document.getElementById('loginPhoto');
-        const captureButton = document.getElementById('capture-btn');
-        const imageInput = document.getElementById('image');
-        const loginImageInput = document.getElementById('loginImage');
-
-        // Access webcam
-        navigator.mediaDevices.getUserMedia({
-                video: true
-            })
-            .then(function(stream) {
-                video.srcObject = stream;
-            })
-            .catch(function(err) {
-                console.error('Error accessing the webcam: ', err);
-            });
-
-        // Capture image
-        captureButton.addEventListener('click', function() {
-            const context = canvas.getContext('2d');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const dataURL = canvas.toDataURL('image/png');
-            photo.src = dataURL;
-            photo.style.display = 'block';
-            loginPhoto.src = dataURL;
-            loginPhoto.style.display = 'block';
-            imageInput.value = dataURL;
-            loginImageInput.value = dataURL;
-            $('#captureModal').modal('hide');
-        });
-
         // Toggle Login/Signup forms
         document.querySelector("#reg-log").addEventListener("change", function() {
             document.querySelector(".card-3d-wrap").classList.toggle("clicked");

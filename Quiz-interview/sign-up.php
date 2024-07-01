@@ -22,36 +22,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $branch = $_POST['branch'];
     $semester = $_POST['semester'];
     $dob = $_POST['dob'];
-    $logpass = password_hash($_POST['logpass'], PASSWORD_DEFAULT); // Hash the password
+    $logpass = password_hash($_POST['logpass'], PASSWORD_DEFAULT);
     $logrepass = $_POST['logrepass'];
-    $image = $_POST['image'];
+    $phoneNum = $_POST['phoneNum'];
 
     // Check if passwords match
     if ($_POST['logpass'] !== $logrepass) {
-        echo "Passwords do not match.";
+        echo "<script>alert('Passwords do not match');</script>";
         exit();
     }
 
-    // Upload image to server
-    $upload_dir = "uploads/";
-    $image_parts = explode(";base64,", $image);
-    $image_type_aux = explode("image/", $image_parts[0]);
-    $image_type = $image_type_aux[1];
-    $image_base64 = base64_decode($image_parts[1]);
-    $file_name = uniqid() . '.' . $image_type;
-    $file = $upload_dir . $file_name;
-    file_put_contents($file, $image_base64);
 
     // Insert user data into database
-    $sql = "INSERT INTO users (firstname, username, college, course, branch, semester, dob, password, profile_picture, reg_date)
-            VALUES ('$firstname', '$logusername', '$college', '$course', '$branch', '$semester', '$dob', '$logpass', '$file', NOW())";
+    
+    $sql = "INSERT INTO users (`firstname`, `username`, `college`, `course`, `branch`, `semester`, `dob`, `password`, `reg_date`, `Phone`)
+            VALUES ('$firstname', '$logusername', '$college', '$course', '$branch', '$semester', '$dob', '$logpass',NOW() , $phoneNum)";
 
     if ($conn->query($sql) === TRUE) {
-        echo "New record created successfully";
+        echo "<script>alert('New record created successfully');</script>";
+        header("Location: authen.php"); 
+
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<script>console.log('Error: " . $sql . "');</script>";
+        echo $conn->error; 
     }
 }
 
 $conn->close();
-?>

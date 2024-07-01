@@ -1,12 +1,21 @@
+
+<?php
+  session_start();
+?>
+
+<?php
+  include "components/nav.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
-  <!-- header files -->
 
   <?php
   include "components/head.php";
+  
   ?>
   
 
@@ -81,7 +90,6 @@
     .icon-item {
       text-align: center;
       margin-top: 57px;
-      /* background-color: #fff; */
       height: 5.5rem;
       display: flex;
       flex-direction: column;
@@ -97,7 +105,6 @@
     .icon-item i:hover {
       color: black;
       box-shadow: 0px 0px 0px rgba(255, 255, 255, 0.7);
-      /* Adjust the values for your preferred glow effect */
     }
 
     .icon-item i,
@@ -113,25 +120,21 @@
     .nav-tabs {
       background-color: rgba(216, 219, 208, 0.5);
       border-radius: 0.25rem;
-      /* Adjust the border-radius as needed */
       overflow: hidden;
     }
 
     .nav-link {
       color: #007bff;
-      /* Default tab text color */
       border: none;
       border-radius: 0.25rem 0.25rem 0 0;
-      /* Adjust the border-radius as needed */
       margin-right: 2px;
       transition: background-color 0.3s, color 0.3s;
     }
 
     .nav-link:hover {
       background-color: rgba(203, 214, 175, 0.5);
-      /* Lighten the background on hover */
       color: #0056b3;
-      /* Darken the text color on hover */
+     
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
@@ -188,20 +191,16 @@
 
 <body>
 
-  <!-- navbar -->
-  <?php
-  include "components/nav.php";
-  ?>
 
   <div class="container-fluid">
     <div class="row">
 
-      <!-- First div -->
+
       <?php
       include "components/user_profile_card.php";
       ?>
 
-      <!-- Second div with 70% width -->
+
       <div class="col-12 col-md-8 second-div order-md-1">
 
         <div class="searchbar">
@@ -243,12 +242,12 @@
 
         <?php
         include "models/pyq_model.php";
-        // This one is of studyMaterial
+        
         ?>
 
         <?php
         include "models/study_material_model.php"
-        // This one is of PYQ
+        
         ?>
 
       </div>
@@ -271,10 +270,10 @@
   <script>
     $(document).ready(function() {
       $('#Interview-form-submit').on('click', function(e) {
-        // Prevent defsault form submission
+
         e.preventDefault();
 
-        // Collect form data
+
         var interviewerType = $('#interviewerType').val();
         var interviewerName = $('#interviewerNames').val();
         var name = $('#name').val();
@@ -285,7 +284,7 @@
         var interviewRole = $('#interviewName').val();
         var interviewDateTime = $('#interviewDateTime').val();
 
-        // Submit the form via AJAX
+ 
         $.ajax({
           url: 'action.php',
           type: 'POST',

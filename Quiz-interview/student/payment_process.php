@@ -20,8 +20,9 @@ if (isset($_POST['name']) && isset($_POST['price']) && isset($_POST['card_id']))
     $payment_status = "Pending";
     $date = date('Y-m-d H:i:s');
 
-    $stmt = $con->prepare("INSERT INTO payment (name, amount, payment_status, added_on) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("siss", $name, $amount, $payment_status, $date);
+    $stmt = $con->prepare("INSERT INTO payment (name, amount, payment_status, added_on , cardId) VALUES (?, ?, ?, ? , ?)");
+    $stmt->bind_param("sissi", $name, $amount, $payment_status, $date, $card_id);
+
 
     if ($stmt->execute()) {
         $_SESSION['order_id'] = $stmt->insert_id;
@@ -50,7 +51,7 @@ if (isset($_POST['payment_id']) && isset($_SESSION['order_id']) && isset($_POST[
 
     $stmt->close();
 
-    $stmt2 = $con->prepare("UPDATE interview_details SET admin_status = 'Done' WHERE id = ?");
+    $stmt2 = $con->prepare("UPDATE interview_details SET payment_status = 'success' WHERE id = ?");
     $stmt2->bind_param("i", $card_id);
 
     if ($stmt2->execute()) {
